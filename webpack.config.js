@@ -27,7 +27,7 @@ const node_env_plugin = new webpack.DefinePlugin({
   }
 })
 
-const js_chunks_location_plugin = new AssetsPlugin({filename: './html/webpack_js_chunks.json'})
+const js_chunks_location_plugin = new AssetsPlugin({filename: './javascript/webpack_js_chunks.json'})
 
 const js_chunks_hashed_plugin = new webpack.optimize.CommonsChunkPlugin({
   name: 'common_game_entry'

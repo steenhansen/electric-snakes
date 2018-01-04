@@ -19,7 +19,7 @@ function combineJsHtml(req, res, uuid, hashed_js, file_name) {
             const game_board = yield readFile("./html/game-board.html", "utf8");
             let file = yield readFile(file_name, "utf8");
             file = file.replace("~~COMMON_GAME_BOARD~~", game_board);
-            const hashed_javascript = yield readFile("./html/webpack_js_chunks.json", "utf8");
+            const hashed_javascript = yield readFile("./javascript/webpack_js_chunks.json", "utf8");
             const hashed_json = JSON.parse(hashed_javascript);
             const common_bundle = hashed_json.common_game_entry.js;
             const common_chunkhash_url = "//" + host_url + "/" + common_bundle;
