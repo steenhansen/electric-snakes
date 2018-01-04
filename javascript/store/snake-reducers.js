@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const immutable_1 = require("immutable");
 const canned_moves_1 = require("../game/canned-moves");
-const project_constants_1 = require("../types/project-constants");
+const project_constants_1 = require("../project-constants");
 const project_enums_1 = require("../types/project-enums");
 const { HUMAN_PLAYER_NUMBER, INIT_REDUX_ACTION } = project_constants_1.default;
 const { GAME_JOINING_1, GAME_PLAYING_2 } = project_enums_1.EGameStates;

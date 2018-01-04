@@ -11,8 +11,6 @@ class PlayerSnake {
         this.snake_direction = snake_options.snake_direction;
         this.has_crashed = false;
         const start_xy = snake_options.xy;
-        //        this.snake_segments = <IXyPointList>List().push(start_xy)
-        //        this.snake_segments = (List as IXyPointList)().push(start_xy)
         this.snake_segments = immutable_1.List().push(start_xy);
         this.turn_number = 0;
         this.last_empty = project_factories_1.XyNull();
