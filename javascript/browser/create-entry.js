@@ -114,7 +114,8 @@ const create_game = {
     sendCreateGame: () => {
         create_game.visibleHtmlJoin(WAIT_HUMAN_START_3);
         try {
-            let game_name = document.getElementById("game-name").value;
+            const game_name_untrim = document.getElementById("game-name").value;
+            const game_name = game_name_untrim.trim();
             const create_name = document.getElementById("create-name").value;
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {
@@ -125,7 +126,6 @@ const create_game = {
                 };
                 game_board.sendMessage(message_object);
             }
-            game_name = document.getElementById("game-name").value;
             project_routines_1.propertyValueSet("start-human", "innerHTML", "Waiting for other player(s) to join " + game_name);
             project_routines_1.propertyValueSet("start-human", "disabled", true);
         }

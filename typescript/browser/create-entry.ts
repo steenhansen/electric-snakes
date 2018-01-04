@@ -134,7 +134,8 @@ const create_game: IGameCreate = {
     sendCreateGame:  (): void =>  {
         create_game.visibleHtmlJoin(WAIT_HUMAN_START_3)
         try {
-            let game_name = (document.getElementById("game-name") as HTMLInputElement).value
+            const game_name_untrim = (document.getElementById("game-name") as HTMLInputElement).value
+            const game_name = game_name_untrim.trim()
             const create_name = (document.getElementById("create-name") as HTMLInputElement).value
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {
@@ -145,7 +146,6 @@ const create_game: IGameCreate = {
                 }
                 game_board.sendMessage(message_object)
             }
-            game_name = (document.getElementById("game-name") as HTMLInputElement).value
             propertyValueSet("start-human", "innerHTML", "Waiting for other player(s) to join " + game_name)
             propertyValueSet("start-human", "disabled", true)
         } catch (e) {
