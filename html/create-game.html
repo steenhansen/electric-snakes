@@ -1,0 +1,46 @@
+<html>
+<head>
+</head>
+<body>
+
+
+<div style='height: 165px; background-color:#eeddcc;'>
+
+    <button id='vs-computer'>Against Computer</button> <button id='vs-humans'>Against Humans</button>
+
+<br>
+    <input type="radio" name="snake-size" id='size-t' value="tiny" checked><label for="size-t">Tiny</label>&nbsp;
+    <input type="radio" name="snake-size" id='size-m' value="medium"><label for="size-m">Medium</label>&nbsp;
+    <input type="radio" name="snake-size" id='size-l' value="large"><label for="size-l">Large</label>
+<br>
+    <input type="radio" name="snake-speed" id='speed-s' value="slow" ><label for="speed-s">Slow</label>&nbsp;
+    <input type="radio" name="snake-speed" id='speed-a' value="average"><label for="speed-a">Average</label>&nbsp;
+    <input type="radio" name="snake-speed" id='speed-f' value="fast" checked><label for="speed-f">Fast</label>
+<br>
+    <input type="radio" name="snake-walls" id='walls-n' value="none" checked><label for="walls-n">None</label>&nbsp;
+    <input type="radio" name="snake-walls" id='walls-r' value="random"><label for="walls-r">Random</label>
+<br>
+
+    <div id="computer-opponents" style="display:none;">Number Computer Opponents:
+        <button id='computer-1'>&nbsp;1&nbsp;</button>
+        <button id='computer-2'>&nbsp;2&nbsp;</button>
+        <button id='computer-3'>&nbsp;3&nbsp;</button>
+        <button id='computer-4'>&nbsp;4&nbsp;</button>
+        <button id='computer-5'>&nbsp;5&nbsp;</button>
+        <button id='computer-6'>&nbsp;6&nbsp;</button>
+        <button id='computer-7'>&nbsp;7&nbsp;</button>
+    </div>
+    <div id="name-of-game" style="display:none;">Game Name: <input  id='game-name' type='text'></div>
+    <div id="name-of-creator" style="display:none;">Your Name: <input id='create-name' type='text'></div>
+    <button id='create-game' style="display:none;">Create game for joining</button>
+    <button id='start-human' style="display:none;">Start Human</button>
+    <div id="create-color" style="display:none;">Your snake color</div>
+
+</div>
+
+
+    ~~COMMON_GAME_BOARD~~
+    <script src="~~SPECIFIC_ENTRY_TYPE~~"></script>
+
+</body>
+</html>

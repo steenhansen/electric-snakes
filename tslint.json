@@ -1,0 +1,18 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+    	"semicolon": [true, "never"],
+    	"variable-name": [true, "ban-keywords", "check-format", "allow-snake-case", "allow-pascal-case"],
+        "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+        "no-namespace": [true, "allow-declarations"],
+        "no-console": [true, "log", "dir"],
+        "forin": false,
+        "no-var-requires": false,
+        "interface-name": [false, "always-prefix"]
+    },
+    "rulesDirectory": []
+}

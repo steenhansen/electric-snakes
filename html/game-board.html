@@ -1,0 +1,39 @@
+
+<script>
+    window.SNAKE_WS_RANDOM_KEY = "~~WS_RANDOM_KEY~~"
+</script>
+
+<style type="text/css">
+    canvas {
+        border: 1px solid black;
+    }
+    @keyframes slidein { from { font-size: 25%; }
+                         to   { font-size: 400%; }
+    }
+    .my-count{
+        animation-duration: 1s;
+        animation-name: slidein;
+        animation-iteration-count:infinite;
+    }
+</style>
+
+<div id='timed-out' style="display:none">Hit refresh, program timed out</div>
+
+<br>
+<div style="display:flex;
+            place-content: center;
+            align-items: center;
+            width: 500px; ">
+
+    <div id='count-downer' style="position:absolute"></div>
+    
+    <canvas id="board-container" width="100" height="100" style="display:none"></canvas>
+
+</div>
+
+<div id="game-results"></div>
+
+<div id="game-names"></div>
+
+<script src="~~COMMON_GAME_ENTRY~~"></script>
+
