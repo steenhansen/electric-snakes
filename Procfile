@@ -1,0 +1,1 @@
+web: node --expose-gc ./javascript/web-server.js
