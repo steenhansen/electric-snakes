@@ -1,7 +1,7 @@
 
 import SnakeGame from "../game/SnakeGame"
 import project_constants from "../project-constants"
-import {dateInSeconds, decodeSnakeSize, decodeSnakeSpeed, decodeSnakeWalls} from "../project-routines"
+import {dateInSeconds, decodeSnakeSize, decodeSnakeSpeed, decodeSnakeWalls, sanitizeValue} from "../project-routines"
 import {EActions, EMoveTypes, EPlayerStates} from "../types/project-enums"
 import {IMiddlewareAPI} from "../types/redux-interfaces"
 import {IConnectionArray, ISocketEvents} from "../types/server-interfaces"
@@ -123,17 +123,21 @@ const socketEvents = (user_connections: IConnectionArray, game_store: IMiddlewar
             const message_obj = JSON.parse(message)
             const {message_type, uuid_key, create_name, game_name, user_name, num_computer, snake_size,
                     milli_turns, move_direction, browser_turn, snake_walls} = message_obj
+            const create_name_sanitized = sanitizeValue(create_name)
+            const game_name_sanitized = sanitizeValue(game_name)
+            const user_name_sanitized = sanitizeValue(user_name)
             if (message_type === TO_SERVER_moveSnake) {
                 socket_events.moveGame_ws(uuid_key, move_direction, Number.parseInt(browser_turn))
             } else if (message_type === TO_SERVER_joinGame) {
-                socket_events.joinGame_ws(uuid_key, game_name, user_name)
+                socket_events.joinGame_ws(uuid_key, game_name_sanitized, user_name_sanitized)
             } else  if (message_type === TO_SERVER_createGame) {
-                socket_events.createGame_ws(uuid_key, game_name, user_name)
+                socket_events.createGame_ws(uuid_key, game_name_sanitized, user_name_sanitized)
             } else if (message_type === TO_SERVER_startMachine) {
-                socket_events.startMachine_ws(uuid_key, game_name, user_name, num_computer,
+                socket_events.startMachine_ws(uuid_key, game_name_sanitized, user_name_sanitized, num_computer,
                                               snake_size, snake_walls, milli_turns)
             } else if (message_type === TO_SERVER_startPeople) {
-                socket_events.startPeople_ws(uuid_key, game_name, create_name, snake_size, snake_walls, milli_turns)
+                socket_events.startPeople_ws(uuid_key, game_name_sanitized, create_name_sanitized,
+                                             snake_size, snake_walls, milli_turns)
             } else if (message_type === TO_SERVER_gameList) {
                 socket_events.gameList_ws(uuid_key)
             } else {

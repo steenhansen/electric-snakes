@@ -8,9 +8,8 @@ const { TO_SERVER_createGame, TO_SERVER_startPeople, TO_SERVER_startMachine } = 
 const game_board = game_object_1.default.the_game_board;
 const create_game = {
     opponentsValid: () => {
-        const computer_opponents = document.getElementById("num-opponents").value;
-        const opponents_trimmed = computer_opponents.trim();
-        if (opponents_trimmed.length > 0) {
+        const computer_opponents = project_routines_1.sanitizeInputValue("num-opponents");
+        if (computer_opponents.length > 0) {
             return true;
         }
         else {
@@ -23,6 +22,15 @@ const create_game = {
         }
         else {
             create_game.visibleHtmlJoin(WAIT_COMPUTER_OPPONENTS_A);
+        }
+    },
+    focusOnAName: () => {
+        const active_element = document.activeElement;
+        if (active_element !== null) {
+            const active_name = active_element.id;
+            if (active_name !== "game-name" && active_name !== "create-name") {
+                project_routines_1.focusById("game-name");
+            }
         }
     },
     visibleHtmlJoin: (new_create_state) => {
@@ -43,7 +51,7 @@ const create_game = {
                 break;
             case (WAIT_HUMAN_NAMING_1):
                 project_routines_1.displayBlockById(["name-of-game", "name-of-creator"]);
-                project_routines_1.focusById("game-name");
+                create_game.focusOnAName();
                 break;
             case (WAIT_HUMAN_CREATION_2):
                 project_routines_1.displayBlockById(["name-of-game", "name-of-creator", "create-game"]);
@@ -66,7 +74,7 @@ const create_game = {
     },
     enableStartButton: () => {
         create_game.visibleHtmlJoin(WAIT_HUMAN_START_3);
-        const game_name = document.getElementById("game-name").value;
+        const game_name = project_routines_1.sanitizeInputValue("game-name");
         project_routines_1.propertyValueSet("start-human", "innerHTML", "Start " + game_name);
         project_routines_1.propertyValueSet("start-human", "disabled", false);
     },
@@ -76,8 +84,8 @@ const create_game = {
     // localhost: 3000/create-game?game_name=TEST_GAME&create_name=TEST_PLAYER_1_
     autoFillCreate: () => {
         if (typeof project_routines_1.getUrlParamByName === "function") {
-            const game_name = project_routines_1.getUrlParamByName("game_name");
-            const create_name = project_routines_1.getUrlParamByName("create_name");
+            const game_name = project_routines_1.sanitizeValue(project_routines_1.getUrlParamByName("game_name"));
+            const create_name = project_routines_1.sanitizeValue(project_routines_1.getUrlParamByName("create_name"));
             if (game_name && create_name) {
                 if (typeof create_game.showHumanGame === "function") {
                     create_game.showHumanGame();
@@ -89,11 +97,9 @@ const create_game = {
         }
     },
     areNamesEmpty: () => {
-        const create_name = document.getElementById("create-name").value;
-        const create_trimmed = create_name.trim();
-        const game_name = document.getElementById("game-name").value;
-        const game_trimmed = game_name.trim();
-        if (create_trimmed.length === 0 || game_trimmed.length === 0) {
+        const create_name = project_routines_1.sanitizeInputValue("create-name");
+        const game_name = project_routines_1.sanitizeInputValue("game-name");
+        if (create_name.length === 0 || game_name.length === 0) {
             return true;
         }
         else {
@@ -114,9 +120,8 @@ const create_game = {
     sendCreateGame: () => {
         create_game.visibleHtmlJoin(WAIT_HUMAN_START_3);
         try {
-            const game_name_untrim = document.getElementById("game-name").value;
-            const game_name = game_name_untrim.trim();
-            const create_name = document.getElementById("create-name").value;
+            const game_name = project_routines_1.sanitizeInputValue("game-name");
+            const create_name = project_routines_1.sanitizeInputValue("create-name");
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {
                     message_type: TO_SERVER_createGame,
@@ -135,8 +140,8 @@ const create_game = {
     },
     sendStartGame: () => {
         try {
-            const game_name = document.getElementById("game-name").value;
-            const create_name = document.getElementById("create-name").value;
+            const game_name = project_routines_1.sanitizeInputValue("game-name");
+            const create_name = project_routines_1.sanitizeInputValue("create-name");
             const snake_size = document.querySelector("input[name=snake-size]:checked").value;
             const snake_speed = document.querySelector("input[name=snake-speed]:checked").value;
             const snake_walls = document.querySelector("input[name=snake-walls]:checked").value;

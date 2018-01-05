@@ -15,15 +15,13 @@ const join_game = {
         join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1);
     },
     areNamesEmpty: () => {
-        const join_name = document.getElementById("join-name").value;
-        const join_trimmed = join_name.trim();
-        const game_name = document.getElementById("game-name").value;
-        const game_trimmed = game_name.trim();
-        if (game_trimmed.length === 0 || join_trimmed.length === 0) {
+        const game_name = project_routines_1.sanitizeInputValue("game-name");
+        const join_name = project_routines_1.sanitizeInputValue("join-name");
+        if (game_name.length === 0 || join_name.length === 0) {
             return true;
         }
         else {
-            join_game.selected_game = game_trimmed;
+            join_game.selected_game = game_name;
             return false;
         }
     },
@@ -81,8 +79,8 @@ const join_game = {
     // localhost: 3000/join-game?game_name=TEST_GAME&join_name=TEST_PLAYER_2_
     autoFillGame: () => {
         if (typeof project_routines_1.getUrlParamByName === "function") {
-            const game_name = project_routines_1.getUrlParamByName("game_name");
-            const join_name = project_routines_1.getUrlParamByName("join_name");
+            const game_name = project_routines_1.sanitizeValue(project_routines_1.getUrlParamByName("game_name"));
+            const join_name = project_routines_1.sanitizeValue(project_routines_1.getUrlParamByName("join_name"));
             if (game_name && join_name) {
                 if (typeof join_game.showJoinGames === "function") {
                     join_game.showJoinGames(new Array(game_name));
@@ -95,8 +93,8 @@ const join_game = {
     },
     sendJoinGame: () => {
         try {
-            const join_name = document.getElementById("join-name").value;
-            const game_name = document.getElementById("game-name").value;
+            const join_name = project_routines_1.sanitizeInputValue("join-name");
+            const game_name = project_routines_1.sanitizeInputValue("game-name");
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {
                     game_name,

@@ -1,6 +1,8 @@
 
-import {displayBlockById, displayInlineById, displayNoneById, eventListenerAdd, focusById, getUrlParamByName,
-        hiddenById, inputValueSet, mouseListenerAdd, propertyValueSet, visibleById} from "../project-routines"
+import {
+    displayBlockById, displayInlineById, displayNoneById, eventListenerAdd, focusById, getUrlParamByName,
+    hiddenById, inputValueSet, mouseListenerAdd, propertyValueSet, sanitizeInputValue, sanitizeValue, visibleById
+} from "../project-routines"
 import {IGameBoard, IGameCreate} from "../types/browser-interfaces"
 import {EActions, ECreateStates} from "../types/project-enums"
 import game_object from "./game-object"
@@ -21,9 +23,8 @@ const game_board: IGameBoard = game_object.the_game_board
 
 const create_game: IGameCreate = {
     opponentsValid:  (): boolean  => {
-        const computer_opponents = (document.getElementById("num-opponents") as HTMLInputElement).value
-        const opponents_trimmed: string = computer_opponents.trim()
-        if (opponents_trimmed.length > 0) {
+        const computer_opponents = sanitizeInputValue("num-opponents")
+        if (computer_opponents.length > 0) {
             return true
         } else {
             return false
@@ -35,6 +36,16 @@ const create_game: IGameCreate = {
             create_game.visibleHtmlJoin(WAIT_COMPUTER_START_B)
         } else {
             create_game.visibleHtmlJoin(WAIT_COMPUTER_OPPONENTS_A)
+        }
+    },
+
+    focusOnAName: (): void => {
+        const active_element = document.activeElement
+        if (active_element !== null) {
+            const active_name = active_element.id
+            if (active_name !== "game-name" && active_name !== "create-name") {
+                focusById("game-name")
+            }
         }
     },
 
@@ -56,7 +67,7 @@ const create_game: IGameCreate = {
                 break
             case (WAIT_HUMAN_NAMING_1):
                 displayBlockById(["name-of-game", "name-of-creator"])
-                focusById("game-name")
+                create_game.focusOnAName()
                 break
             case (WAIT_HUMAN_CREATION_2):
                 displayBlockById(["name-of-game", "name-of-creator", "create-game"])
@@ -82,7 +93,7 @@ const create_game: IGameCreate = {
 
     enableStartButton:  (): void =>  {
         create_game.visibleHtmlJoin(WAIT_HUMAN_START_3)
-        const game_name = (document.getElementById("game-name") as HTMLInputElement).value
+        const game_name = sanitizeInputValue("game-name")
         propertyValueSet("start-human", "innerHTML", "Start " + game_name)
         propertyValueSet("start-human", "disabled", false)
     },
@@ -94,8 +105,8 @@ const create_game: IGameCreate = {
     // localhost: 3000/create-game?game_name=TEST_GAME&create_name=TEST_PLAYER_1_
     autoFillCreate:  (): void  => {
         if (typeof getUrlParamByName === "function") {
-            const game_name: string = getUrlParamByName("game_name")
-            const create_name: string = getUrlParamByName("create_name")
+            const game_name: string = sanitizeValue(getUrlParamByName("game_name"))
+            const create_name: string = sanitizeValue(getUrlParamByName("create_name"))
             if (game_name && create_name ) {
                 if (typeof create_game.showHumanGame === "function") {
                     create_game.showHumanGame()
@@ -108,11 +119,9 @@ const create_game: IGameCreate = {
     },
 
     areNamesEmpty:  (): boolean =>  {
-        const create_name = (document.getElementById("create-name") as HTMLInputElement).value
-        const create_trimmed: string = create_name.trim()
-        const game_name = (document.getElementById("game-name") as HTMLInputElement).value
-        const game_trimmed: string = game_name.trim()
-        if (create_trimmed.length === 0 || game_trimmed.length === 0) {
+        const create_name = sanitizeInputValue("create-name")
+        const game_name = sanitizeInputValue("game-name")
+        if (create_name.length === 0 || game_name.length === 0) {
             return true
         } else {
             return false
@@ -134,9 +143,8 @@ const create_game: IGameCreate = {
     sendCreateGame:  (): void =>  {
         create_game.visibleHtmlJoin(WAIT_HUMAN_START_3)
         try {
-            const game_name_untrim = (document.getElementById("game-name") as HTMLInputElement).value
-            const game_name = game_name_untrim.trim()
-            const create_name = (document.getElementById("create-name") as HTMLInputElement).value
+            const game_name = sanitizeInputValue("game-name")
+            const create_name = sanitizeInputValue("create-name")
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {
                     message_type: TO_SERVER_createGame,
@@ -155,8 +163,8 @@ const create_game: IGameCreate = {
 
     sendStartGame:  (): void  => {
         try {
-            const game_name = (document.getElementById("game-name") as HTMLInputElement).value
-            const create_name = (document.getElementById("create-name") as HTMLInputElement).value
+            const game_name = sanitizeInputValue("game-name")
+            const create_name = sanitizeInputValue("create-name")
             const snake_size =  (document.querySelector("input[name=snake-size]:checked") as HTMLInputElement).value
             const snake_speed = (document.querySelector("input[name=snake-speed]:checked") as HTMLInputElement).value
             const snake_walls = (document.querySelector("input[name=snake-walls]:checked") as HTMLInputElement).value
@@ -177,7 +185,7 @@ const create_game: IGameCreate = {
         }
     },
 
-    sendVersusComputer:  (event: Event): void => {
+    sendVersusComputer: (event: Event): void => {
         const target_element: HTMLElement = event.target as HTMLElement
         const target_id_arr = target_element.id.split("-")
         const num_computers = target_id_arr[1]

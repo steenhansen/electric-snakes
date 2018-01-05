@@ -1,7 +1,9 @@
 
 import project_constants from "../project-constants"
-import {displayInlineById, displayNoneById, eventListenerAdd, getUrlParamByName, hiddenById,
-        inputValueSet, propertyValueSet, visibleById} from "../project-routines"
+import {
+    displayInlineById, displayNoneById, eventListenerAdd, getUrlParamByName, hiddenById,
+    inputValueSet, propertyValueSet, sanitizeInputValue, sanitizeValue, visibleById
+} from "../project-routines"
 import {IGameBoard, IGameJoin} from "../types/browser-interfaces"
 import {EActions, EJoinStates} from "../types/project-enums"
 import game_object from "./game-object"
@@ -22,14 +24,12 @@ const join_game: IGameJoin = {
     },
 
     areNamesEmpty: (): boolean  => {
-        const join_name = (document.getElementById("join-name") as HTMLInputElement).value
-        const join_trimmed = join_name.trim()
-        const game_name = (document.getElementById("game-name") as HTMLInputElement).value
-        const game_trimmed = game_name.trim()
-        if (game_trimmed.length === 0 || join_trimmed.length === 0) {
+        const game_name = sanitizeInputValue("game-name")
+        const join_name = sanitizeInputValue("join-name")
+        if (game_name.length === 0 || join_name.length === 0) {
             return true
         } else {
-            join_game.selected_game = game_trimmed
+            join_game.selected_game = game_name
             return false
         }
     },
@@ -91,8 +91,8 @@ const join_game: IGameJoin = {
     // localhost: 3000/join-game?game_name=TEST_GAME&join_name=TEST_PLAYER_2_
     autoFillGame: (): void => {
         if (typeof getUrlParamByName === "function") {
-            const game_name: string = getUrlParamByName("game_name")
-            const join_name: string = getUrlParamByName("join_name")
+            const game_name: string = sanitizeValue(getUrlParamByName("game_name"))
+            const join_name: string = sanitizeValue(getUrlParamByName("join_name"))
             if (game_name && join_name) {
                 if (typeof join_game.showJoinGames === "function") {
                     join_game.showJoinGames(new Array(game_name))
@@ -106,8 +106,8 @@ const join_game: IGameJoin = {
 
     sendJoinGame: () => {
         try {
-            const join_name = (document.getElementById("join-name") as HTMLInputElement).value
-            const game_name = (document.getElementById("game-name") as HTMLInputElement).value
+            const join_name = sanitizeInputValue("join-name")
+            const game_name = sanitizeInputValue("game-name")
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {
                     game_name,

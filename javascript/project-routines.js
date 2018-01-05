@@ -177,3 +177,20 @@ function decodeSnakeWalls(create_snake_walls) {
     return game_snake_walls;
 }
 exports.decodeSnakeWalls = decodeSnakeWalls;
+function sanitizeValue(unsanitized_val) {
+    if (typeof unsanitized_val === "undefined") {
+        return "";
+    }
+    else {
+        const sanitize_val = unsanitized_val.replace(/[^\w ']/, "");
+        const trimmed_val = sanitize_val.trim();
+        return trimmed_val;
+    }
+}
+exports.sanitizeValue = sanitizeValue;
+function sanitizeInputValue(id_name) {
+    const id_val = document.getElementById(id_name).value;
+    const sanitize_val = sanitizeValue(id_val);
+    return sanitize_val;
+}
+exports.sanitizeInputValue = sanitizeInputValue;

@@ -1,16 +1,17 @@
-
 import SNAKE_TEST_CONFIG from "./global_test_config"
 import project_constants from "./project-constants"
 import {EMoveTypes} from "./types/project-enums"
 import {IWebSocket} from "./types/system-interfaces"
 
-const {TINY_SNAKE_SIZE, MEDIUM_SNAKE_SIZE, LARGE_SNAKE_SIZE,
-       SLOW_SNAKE_SPEED, AVERAGE_SNAKE_SPEED, FAST_SNAKE_SPEED} = project_constants
+const {
+    TINY_SNAKE_SIZE, MEDIUM_SNAKE_SIZE, LARGE_SNAKE_SIZE,
+    SLOW_SNAKE_SPEED, AVERAGE_SNAKE_SPEED, FAST_SNAKE_SPEED
+} = project_constants
 const {DOWN_MOVE, UP_MOVE, LEFT_MOVE, RIGHT_MOVE, CONTINUE_MOVE} = EMoveTypes
 
 export let sendSocket = (user_websocket: IWebSocket, message_type: string, message_data: any) => {
     const socket_data = {
-        data:  message_data
+        data: message_data
         , message_type
     }
     const json_data = JSON.stringify(socket_data)
@@ -27,12 +28,12 @@ export function dateInSeconds(): number {
 }
 
 export function mouseListenerAdd(id_name: string, event_type: string,
-                                 event_function: (event: Event) => void ): void {
+                                 event_function: (event: Event) => void): void {
     const event_element = (document.getElementById(id_name) as HTMLInputElement)
     event_element.addEventListener(event_type, event_function, false)
 }
 
-export function eventListenerAdd(id_name: string, event_type: string, event_function: () => void ): void {
+export function eventListenerAdd(id_name: string, event_type: string, event_function: () => void): void {
     const event_element = (document.getElementById(id_name) as HTMLInputElement)
     event_element.addEventListener(event_type, event_function, false)
 }
@@ -45,7 +46,7 @@ export function hiddenById(element_ids: string[]): void {
 
 export function visibleById(element_ids: string[]): void {
     for (const element_id of element_ids) {
-       (document.getElementById(element_id) as HTMLInputElement).style.visibility = "visible"
+        (document.getElementById(element_id) as HTMLInputElement).style.visibility = "visible"
     }
 }
 
@@ -97,7 +98,7 @@ export function colorTextSpan(rgb_color: string, text: string): string {
 
 export function upDownLeftRight(key_code: number, left_udlr_keys: number[], right_udlr_keys: number[]): string {
     let direction = CONTINUE_MOVE
-    if ( (key_code === left_udlr_keys[0]) || (key_code === right_udlr_keys[0])) {
+    if ((key_code === left_udlr_keys[0]) || (key_code === right_udlr_keys[0])) {
         direction = UP_MOVE
     } else if ((key_code === left_udlr_keys[1]) || (key_code === right_udlr_keys[1])) {
         direction = DOWN_MOVE
@@ -173,4 +174,20 @@ export function decodeSnakeWalls(create_snake_walls: string): boolean {
         game_snake_walls = true
     }
     return game_snake_walls
+}
+
+export function sanitizeValue(unsanitized_val: string|undefined) {
+    if (typeof unsanitized_val === "undefined") {
+        return ""
+    } else {
+        const sanitize_val = unsanitized_val.replace(/[^\w ']/, "")
+        const trimmed_val = sanitize_val.trim()
+        return trimmed_val
+    }
+}
+
+export function sanitizeInputValue(id_name: string) {
+    const id_val = (document.getElementById(id_name) as HTMLInputElement).value
+    const sanitize_val = sanitizeValue(id_val)
+    return sanitize_val
 }

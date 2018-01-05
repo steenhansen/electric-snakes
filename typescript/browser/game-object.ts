@@ -11,7 +11,7 @@ import browser_variables from "./browser-variables"
 import {DrawBoard} from "./draw-board"
 
 declare let window: IWindow
-const {SECONDS_COUNT_DOWN, ONE_SECOND, WS_MESSAGE_DELIM, LEFT_HAND_UDLR_KEYS, RIGHT_HAND_UDLR_KEYS} = project_constants
+const {SECONDS_COUNT_DOWN, ONE_SECOND, LEFT_HAND_UDLR_KEYS, RIGHT_HAND_UDLR_KEYS} = project_constants
 const {CONTINUE_MOVE} = EMoveTypes
 
 const {TO_BROWSER_startPeople, TO_BROWSER_all_moves, TO_SERVER_moveSnake, TO_BROWSER_announceWinner,

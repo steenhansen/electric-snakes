@@ -10,6 +10,7 @@ export interface IGameCreate {
     fixStartCreateHtml: () => void
     enableStartButton: () => void
     showHumanGame: () => void
+    focusOnAName: () => void
     sendCreateGame: () => void
     sendStartGame: () => void
     sendVersusComputer: (event: Event) => void
