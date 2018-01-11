@@ -35,26 +35,21 @@ const join_game = {
         }
     },
     visibleHtmlJoin: (new_join_state) => {
-        console.log('vvvvvvvv', new_join_state);
         switch (new_join_state) {
             case (WAIT_JOIN_NAME_GAME_1):
                 join_game.have_joined = false;
-                console.log('111111111111111111111');
                 project_routines_1.noneById(["join-game", "waiting-for-start", "join-color"]);
                 project_routines_1.blockById(["name-of-join", "choose-game"]);
                 break;
             case (WAIT_JOIN_GAME_2):
-                console.log('2222222222222222');
                 project_routines_1.blockById(["join-game"]);
                 break;
             case (WAIT_JOIN_START_3):
-                console.log('3333333333333');
                 join_game.have_joined = true;
                 project_routines_1.noneById(["name-of-join", "choose-game", "join-game"]);
                 project_routines_1.blockById(["waiting-for-start"]);
                 break;
             case (WAIT_JOIN_PLAYING_4):
-                console.log('4444444444444444444444');
                 project_routines_1.noneById(["waiting-for-start", "join-game"]);
                 project_routines_1.blockById(["join-color"]);
                 break;
