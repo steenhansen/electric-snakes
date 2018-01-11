@@ -55,7 +55,10 @@ export enum EActions {
     , TO_BROWSER_missedStart = "TO_BROWSER_missedStart"
     , TO_BROWSER_gameList = "TO_BROWSER_gameList"
     , TO_BROWSER_timeout = "TO_BROWSER_timeout"
+
     , TO_BROWSER_startPeople = "TO_BROWSER_startPeople"
+    , TO_BROWSER_startMachine = "TO_BROWSER_startMachine"
+
     , TO_BROWSER_2_to_tango = "TO_BROWSER_2_to_tango"
     , TO_BROWSER_9_players = "TO_BROWSER_9_players"
     , TO_BROWSER_advanceBoard = "TO_BROWSER_advanceBoard"
