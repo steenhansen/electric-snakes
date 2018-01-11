@@ -9,7 +9,7 @@ const project_enums_1 = require("../types/project-enums");
 const { HUMAN_PLAYER_NUMBER, TEST_PLAYER_POSTFIX, WS_MESSAGE_DELIM, PLAYER_0_SENTINEL, MAX_PLAYERS } = project_constants_1.default;
 const { PLAYER_PERSON } = project_enums_1.EPlayerStates;
 const { GAME_JOINING_1 } = project_enums_1.EGameStates;
-const { TO_SERVER_createGame, TO_SERVER_startPeople, TO_SERVER_startMachine, TO_SERVER_joinGame, TO_SERVER_moveSnake, TO_SERVER_moveMachine, TO_SERVER_disconnectBrowser, TO_BROWSER_gameList, TO_BROWSER_startPeople, TO_BROWSER_2_to_tango, TO_BROWSER_advanceBoard, TO_BROWSER_crashTurn, TO_BROWSER_announceWinner, TO_BROWSER_announceTie, TO_BROWSER_announceNames, TO_BROWSER_your_color, TO_BROWSER_all_moves, TO_BROWSER_timeout, TO_BROWSER_missedStart, TO_BROWSER_9_players } = project_enums_1.EActions;
+const { TO_SERVER_createGame, TO_SERVER_startPeople, TO_SERVER_startMachine, TO_SERVER_joinGame, TO_SERVER_moveSnake, TO_SERVER_moveMachine, TO_SERVER_disconnectBrowser, TO_BROWSER_gameList, TO_BROWSER_startPeople, TO_BROWSER_2_to_tango, TO_BROWSER_advanceBoard, TO_BROWSER_crashTurn, TO_BROWSER_announceWinner, TO_BROWSER_announceTie, TO_BROWSER_announceNames, TO_BROWSER_your_color, TO_BROWSER_all_moves, TO_BROWSER_timeout, TO_BROWSER_missedStart, TO_BROWSER_9_players, TO_BROWSER_startMachine } = project_enums_1.EActions;
 function gameList_mw(action, next, state) {
     try {
         const game_names = [];
@@ -174,7 +174,7 @@ function startMachine_mw(action, next, state) {
                 config_testing_vars: testingVars(),
                 test_moves: snake.test_moves
             };
-            project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_startPeople, player_game_info);
+            project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_startMachine, player_game_info);
             action.snake_game.firstMoveTime();
         }
         next(action);

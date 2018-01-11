@@ -31,7 +31,6 @@ const create_game: IGameCreate = {
     },
 
     visibleHtmlJoin: (new_create_state: ECreateStates): void  => {
-
         switch (new_create_state) {
             case (WAIT_COMPUTER_OPPONENTS_A):
                 noneById([ "vs-computer", "vs-humans", "join-page"])
@@ -167,8 +166,6 @@ const create_game: IGameCreate = {
                     milli_turns: snake_speed
                 }
                 game_board.sendMessage(message_object)
-               // inputValueSet("game-name", "")
-               // inputValueSet("create-name", "")
             }
         } catch (e) {
             console.error("err", e)

@@ -39,7 +39,7 @@ const join_game: IGameJoin = {
         } else {
             join_game.visibleHtmlJoin(WAIT_JOIN_GAME_2)
         }
-    },  
+    },
 
     visibleHtmlJoin: (new_join_state: EJoinStates): void  => {
         switch (new_join_state) {
@@ -74,7 +74,7 @@ const join_game: IGameJoin = {
     },
 
     showJoinGames: (the_data: string[]): void =>  {
-        if (!join_game.have_joined){
+        if (!join_game.have_joined) {
             let select_html = ""
             let is_selected
             for (const game_user_names of the_data) {

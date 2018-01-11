@@ -17,7 +17,7 @@ const { TO_SERVER_createGame, TO_SERVER_startPeople, TO_SERVER_startMachine, TO_
     , TO_SERVER_moveSnake, TO_SERVER_moveMachine, TO_SERVER_disconnectBrowser, TO_BROWSER_gameList
     , TO_BROWSER_startPeople, TO_BROWSER_2_to_tango, TO_BROWSER_advanceBoard, TO_BROWSER_crashTurn
     , TO_BROWSER_announceWinner, TO_BROWSER_announceTie, TO_BROWSER_announceNames, TO_BROWSER_your_color
-    , TO_BROWSER_all_moves, TO_BROWSER_timeout, TO_BROWSER_missedStart, TO_BROWSER_9_players
+    , TO_BROWSER_all_moves, TO_BROWSER_timeout, TO_BROWSER_missedStart, TO_BROWSER_9_players, TO_BROWSER_startMachine
 } = EActions
 
 function gameList_mw(action: IAction, next: IDispatch, state: IStateStore): void {
@@ -182,7 +182,7 @@ function startMachine_mw(action: IAction, next: IDispatch, state: IStateStore): 
                 config_testing_vars: testingVars(),
                 test_moves: snake.test_moves
             }
-            sendSocket(human_player.web_socket, TO_BROWSER_startPeople, player_game_info)
+            sendSocket(human_player.web_socket, TO_BROWSER_startMachine, player_game_info)
             action.snake_game.firstMoveTime()
         }
         next(action)

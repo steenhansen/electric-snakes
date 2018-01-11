@@ -145,8 +145,6 @@ const create_game = {
                     milli_turns: snake_speed
                 };
                 game_board.sendMessage(message_object);
-                // inputValueSet("game-name", "")
-                // inputValueSet("create-name", "")
             }
         }
         catch (e) {

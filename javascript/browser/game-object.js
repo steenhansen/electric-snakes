@@ -9,7 +9,7 @@ const browser_variables_1 = require("./browser-variables");
 const draw_board_1 = require("./draw-board");
 const { SECONDS_COUNT_DOWN, ONE_SECOND, LEFT_HAND_UDLR_KEYS, RIGHT_HAND_UDLR_KEYS } = project_constants_1.default;
 const { CONTINUE_MOVE } = project_enums_1.EMoveTypes;
-const { TO_BROWSER_startPeople, TO_BROWSER_all_moves, TO_SERVER_moveSnake, TO_BROWSER_announceWinner, TO_BROWSER_announceTie, TO_BROWSER_your_color, TO_BROWSER_crashTurn, TO_BROWSER_announceNames, TO_BROWSER_9_players, TO_BROWSER_gameList, TO_BROWSER_2_to_tango, TO_BROWSER_timeout, TO_BROWSER_missedStart } = project_enums_1.EActions;
+const { TO_BROWSER_startPeople, TO_BROWSER_all_moves, TO_SERVER_moveSnake, TO_BROWSER_announceWinner, TO_BROWSER_announceTie, TO_BROWSER_your_color, TO_BROWSER_crashTurn, TO_BROWSER_announceNames, TO_BROWSER_9_players, TO_BROWSER_gameList, TO_BROWSER_2_to_tango, TO_BROWSER_timeout, TO_BROWSER_missedStart, TO_BROWSER_startMachine } = project_enums_1.EActions;
 const game_board = {
     live_colors: [],
     draw_board: {},
@@ -42,7 +42,7 @@ const game_board = {
         draw_board_1.DrawBoard.initializeDraw(tile_size, board_colors);
         game_board.draw_board = draw_board_1.DrawBoard;
         game_board.live_colors = board_colors;
-        game_board.showPlayers(game_board.show_players_data);
+        game_board.showPlayers(game_board.show_players_data); // NB, must be redone with correct colors
         game_board.fixStartHtml();
         browser_variables_1.default.game_started = false;
         browser_variables_1.default.game_over = false;
@@ -209,7 +209,12 @@ browser_variables_1.default.the_websocket.onmessage = (event) => {
     const json_obj = JSON.parse(event.data);
     const the_message = json_obj.message_type;
     const player_game_info = json_obj.data;
-    if (the_message === TO_BROWSER_startPeople) {
+    if (the_message === TO_BROWSER_startMachine) {
+        game_board.show_players_data = [];
+        game_board.showPlayers([]);
+        game_board.initializeGame(player_game_info);
+    }
+    else if (the_message === TO_BROWSER_startPeople) {
         game_board.initializeGame(player_game_info);
     }
     else if (the_message === TO_BROWSER_all_moves) {
