@@ -38,31 +38,13 @@ export function eventListenerAdd(id_name: string, event_type: string, event_func
     event_element.addEventListener(event_type, event_function, false)
 }
 
-export function hiddenById(element_ids: string[]): void {
+export function blockById(element_ids: string[]): void {
     for (const element_id of element_ids) {
-        (document.getElementById(element_id) as HTMLInputElement).style.visibility = "hidden"
+        (document.getElementById(element_id) as HTMLInputElement).style.display = "inline-block"
     }
 }
 
-export function visibleById(element_ids: string[]): void {
-    for (const element_id of element_ids) {
-        (document.getElementById(element_id) as HTMLInputElement).style.visibility = "visible"
-    }
-}
-
-export function displayInlineById(element_ids: string[]): void {
-    for (const element_id of element_ids) {
-        (document.getElementById(element_id) as HTMLInputElement).style.display = "inline"
-    }
-}
-
-export function displayBlockById(element_ids: string[]): void {
-    for (const element_id of element_ids) {
-        (document.getElementById(element_id) as HTMLInputElement).style.display = "block"
-    }
-}
-
-export function displayNoneById(element_ids: string[]): void {
+export function noneById(element_ids: string[]): void {
     for (const element_id of element_ids) {
         (document.getElementById(element_id) as HTMLInputElement).style.display = "none"
     }
@@ -119,8 +101,18 @@ export function inputValueSet(element_id: string, element_value: string): void {
 
 // Stop Object is possibly "null" typescript error
 export function propertyValueSet(element_id: string, attribute_name: string, attribute_value: any): void {
-    const input_element: any = document.getElementById(element_id) as HTMLInputElement
-    input_element[attribute_name] = attribute_value
+    const property_element: any = document.getElementById(element_id) as HTMLInputElement
+    property_element[attribute_name] = attribute_value
+}
+
+export function selectedValueGet(element_id: string): string {
+    const select_element: any = document.getElementById(element_id) as HTMLInputElement
+    if (select_element.selectedIndex === -1) {
+        return ""
+    } else {
+        const selected_value = select_element.options[select_element.selectedIndex].value
+        return selected_value
+    }
 }
 
 // Stop Object is possibly "null" typescript error on setting styles
@@ -180,7 +172,7 @@ export function sanitizeValue(unsanitized_val: string|undefined) {
     if (typeof unsanitized_val === "undefined") {
         return ""
     } else {
-        const sanitize_val = unsanitized_val.replace(/[^\w ']/, "")
+        const sanitize_val = unsanitized_val.replace(/[^a-z0-9 '_]/ig, "")
         const trimmed_val = sanitize_val.trim()
         return trimmed_val
     }

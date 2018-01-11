@@ -3,19 +3,21 @@
 </head>
 <body>
     <div style='height: 150px;'>
-    <div id="name-of-join"> Your Name: <input id='join-name' type='text'>
-        &nbsp;&nbsp;<a href="/create-game" target="_blank">Create Game Page</a>
-    </div>
-    <div id="choose-game">
-        Choose a game to join below<br>
-        <select id='game-name' size='5' style='width:333px'></select>
-    </div>
-    <button id='join-game' style='display:none;' >Join Game</button>
+        <div id="name-of-join"> Your Name: <input id='join-name' type='text' autofocus="autofocus" />
+            &nbsp;&nbsp;<a href="/create-game" target="_blank">Create Game Page</a>
+        </div>
+        <br>
+        <div id="choose-game">
+            Choose a game to join below<br>
+            <select id='game-name' size='5' style='width:333px'></select>
+        </div>
+        <br>
+        <button id='join-game' style='display:none;' >Join Game</button>
 
-    <span id="waiting-for-start" style='display:none;' > Waiting for game creator to press 'start'</span>
+        <span id="waiting-for-start" style='display:none;' > Waiting for game creator to press 'start'</span>
 
-    <span id="join-color" style='display:none;' >Your snake color</span>
-</div>
+        <span id="join-color" style='display:none;' >Your snake color</span>
+    </div>
     ~~COMMON_GAME_BOARD~~
     <script src="~~SPECIFIC_ENTRY_TYPE~~"></script>
 </body>

@@ -1,9 +1,7 @@
 
 import project_constants from "../project-constants"
-import {
-    displayInlineById, displayNoneById, eventListenerAdd, getUrlParamByName, hiddenById,
-    inputValueSet, propertyValueSet, sanitizeInputValue, sanitizeValue, visibleById
-} from "../project-routines"
+import { blockById, eventListenerAdd, getUrlParamByName, inputValueSet, noneById,
+    propertyValueSet, sanitizeInputValue, sanitizeValue, selectedValueGet } from "../project-routines"
 import {IGameBoard, IGameJoin} from "../types/browser-interfaces"
 import {EActions, EJoinStates} from "../types/project-enums"
 import game_object from "./game-object"
@@ -18,6 +16,7 @@ const join_game: IGameJoin = {
 
     refresh_func_id: 0,
     selected_game: "",
+    have_joined: false,
 
     missedStart: (missed_game_name: string): void  =>  {
         join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1)
@@ -40,24 +39,31 @@ const join_game: IGameJoin = {
         } else {
             join_game.visibleHtmlJoin(WAIT_JOIN_GAME_2)
         }
-    },
+    },  
 
     visibleHtmlJoin: (new_join_state: EJoinStates): void  => {
-        displayNoneById(["join-game", "waiting-for-start", "join-color"])
-        hiddenById(["name-of-join", "choose-game"])
+        console.log('vvvvvvvv', new_join_state)
         switch (new_join_state) {
             case(WAIT_JOIN_NAME_GAME_1):
-                visibleById(["name-of-join", "choose-game"])
+                join_game.have_joined = false
+        console.log('111111111111111111111')
+                noneById(["join-game", "waiting-for-start", "join-color"])
+                blockById(["name-of-join", "choose-game"])
                 break
             case (WAIT_JOIN_GAME_2):
-                visibleById(["name-of-join", "choose-game", "join-game"])
-                displayInlineById(["join-game"])
+        console.log('2222222222222222')
+                blockById(["join-game"])
                 break
             case (WAIT_JOIN_START_3):
-                displayInlineById(["waiting-for-start"])
+        console.log('3333333333333')
+                join_game.have_joined = true
+                noneById(["name-of-join", "choose-game", "join-game"])
+                blockById(["waiting-for-start"])
                 break
             case (WAIT_JOIN_PLAYING_4):
-                displayInlineById(["join-color"])
+        console.log('4444444444444444444444')
+                noneById(["waiting-for-start", "join-game"])
+                blockById(["join-color"])
                 break
             default:
                 break
@@ -73,19 +79,25 @@ const join_game: IGameJoin = {
     },
 
     showJoinGames: (the_data: string[]): void =>  {
-        let select_html = ""
-        let is_selected
-        for (const game_user_names of the_data) {
-            const [game_name, user_name] = game_user_names.split(WS_MESSAGE_DELIM)
-            if (game_name === join_game.selected_game) {
-                is_selected = " selected "
-            } else {
-                is_selected = ""
+        if (!join_game.have_joined){
+            let select_html = ""
+            let is_selected
+            for (const game_user_names of the_data) {
+                const [game_name, user_name] = game_user_names.split(WS_MESSAGE_DELIM)
+                if (game_name === join_game.selected_game) {
+                    is_selected = " selected "
+                } else {
+                    is_selected = ""
+                }
+                const option = `<option value="${game_name}" ${is_selected}>${game_name} - ${user_name}</option>`
+                select_html += option
             }
-            const option = `<option value="${game_name}" ${is_selected}>${game_name} - ${user_name}</option>`
-            select_html += option
+            propertyValueSet("game-name", "innerHTML", select_html)
+            const selected_game = selectedValueGet("game-name")
+            if (selected_game !== "") {
+                join_game.visibleHtmlJoin(WAIT_JOIN_GAME_2)
+            }
         }
-        propertyValueSet("game-name", "innerHTML", select_html)
     },
 
     // localhost: 3000/join-game?game_name=TEST_GAME&join_name=TEST_PLAYER_2_

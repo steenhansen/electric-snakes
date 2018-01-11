@@ -1,14 +1,18 @@
 
 // $ webpack 
 
-const path = require('path')
+ require('babel-polyfill')
+
+ const path = require('path')
 const env = require('node-env-file')
+
 const webpack = require('webpack')
 const AssetsPlugin = require('assets-webpack-plugin')
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin')
 env('./.env')  // N.B. This defines process.env.NODE_ENV
 
 const jsx_entries = {
+	 babel_polyfill: '../polyfill.js', 
   create_game_entry: './browser/create-entry.js'
   , join_game_entry: './browser/join-entry.js'
 }
@@ -40,6 +44,19 @@ const do_cleanup_plugin = new WebpackCleanupPlugin({exclude: ['*.ico']})
 
 module.exports = {
   context: path.resolve(__dirname, './javascript/')
+
+  , module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ]
+  }
+
   ,entry: jsx_entries
   ,output: js_vars_and_files
   ,plugins: [js_chunks_location_plugin

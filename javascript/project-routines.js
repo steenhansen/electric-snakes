@@ -33,36 +33,18 @@ function eventListenerAdd(id_name, event_type, event_function) {
     event_element.addEventListener(event_type, event_function, false);
 }
 exports.eventListenerAdd = eventListenerAdd;
-function hiddenById(element_ids) {
+function blockById(element_ids) {
     for (const element_id of element_ids) {
-        document.getElementById(element_id).style.visibility = "hidden";
+        document.getElementById(element_id).style.display = "inline-block";
     }
 }
-exports.hiddenById = hiddenById;
-function visibleById(element_ids) {
-    for (const element_id of element_ids) {
-        document.getElementById(element_id).style.visibility = "visible";
-    }
-}
-exports.visibleById = visibleById;
-function displayInlineById(element_ids) {
-    for (const element_id of element_ids) {
-        document.getElementById(element_id).style.display = "inline";
-    }
-}
-exports.displayInlineById = displayInlineById;
-function displayBlockById(element_ids) {
-    for (const element_id of element_ids) {
-        document.getElementById(element_id).style.display = "block";
-    }
-}
-exports.displayBlockById = displayBlockById;
-function displayNoneById(element_ids) {
+exports.blockById = blockById;
+function noneById(element_ids) {
     for (const element_id of element_ids) {
         document.getElementById(element_id).style.display = "none";
     }
 }
-exports.displayNoneById = displayNoneById;
+exports.noneById = noneById;
 function focusById(element_id) {
     document.getElementById(element_id).focus();
 }
@@ -117,10 +99,21 @@ function inputValueSet(element_id, element_value) {
 exports.inputValueSet = inputValueSet;
 // Stop Object is possibly "null" typescript error
 function propertyValueSet(element_id, attribute_name, attribute_value) {
-    const input_element = document.getElementById(element_id);
-    input_element[attribute_name] = attribute_value;
+    const property_element = document.getElementById(element_id);
+    property_element[attribute_name] = attribute_value;
 }
 exports.propertyValueSet = propertyValueSet;
+function selectedValueGet(element_id) {
+    const select_element = document.getElementById(element_id);
+    if (select_element.selectedIndex === -1) {
+        return "";
+    }
+    else {
+        const selected_value = select_element.options[select_element.selectedIndex].value;
+        return selected_value;
+    }
+}
+exports.selectedValueGet = selectedValueGet;
 // Stop Object is possibly "null" typescript error on setting styles
 function styleValueSet(element_id, style_name, style_value) {
     const input_element = document.getElementById(element_id);
@@ -182,7 +175,7 @@ function sanitizeValue(unsanitized_val) {
         return "";
     }
     else {
-        const sanitize_val = unsanitized_val.replace(/[^\w ']/, "");
+        const sanitize_val = unsanitized_val.replace(/[^a-z0-9 '_]/ig, "");
         const trimmed_val = sanitize_val.trim();
         return trimmed_val;
     }

@@ -7,23 +7,6 @@ const { WAIT_COMPUTER_OPPONENTS_A, WAIT_COMPUTER_START_B, WAIT_COMPUTER_START_C,
 const { TO_SERVER_createGame, TO_SERVER_startPeople, TO_SERVER_startMachine } = project_enums_1.EActions;
 const game_board = game_object_1.default.the_game_board;
 const create_game = {
-    opponentsValid: () => {
-        const computer_opponents = project_routines_1.sanitizeInputValue("num-opponents");
-        if (computer_opponents.length > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    },
-    numOpponents: () => {
-        if (create_game.opponentsValid()) {
-            create_game.visibleHtmlJoin(WAIT_COMPUTER_START_B);
-        }
-        else {
-            create_game.visibleHtmlJoin(WAIT_COMPUTER_OPPONENTS_A);
-        }
-    },
     focusOnAName: () => {
         const active_element = document.activeElement;
         if (active_element !== null) {
@@ -34,33 +17,38 @@ const create_game = {
         }
     },
     visibleHtmlJoin: (new_create_state) => {
-        project_routines_1.displayNoneById(["computer-opponents", "name-of-game", "name-of-creator", "create-game",
-            "start-human", "create-color"]);
-        project_routines_1.hiddenById(["vs-computer", "vs-humans"]);
         switch (new_create_state) {
             case (WAIT_COMPUTER_OPPONENTS_A):
-                project_routines_1.displayInlineById(["computer-opponents"]);
+                project_routines_1.noneById(["vs-computer", "vs-humans", "join-page"]);
+                project_routines_1.blockById(["computer-opponents"]);
                 break;
             case (WAIT_COMPUTER_START_B):
-                project_routines_1.displayInlineById(["computer-opponents"]);
+                project_routines_1.noneById(["size-of-snakes", "speed-of-snakes", "walls-of-snakes", "computer-opponents"]);
                 break;
             case (WAIT_COMPUTER_START_C):
                 break;
             case (WAIT_FOR_CHOICE):
-                project_routines_1.visibleById(["vs-computer", "vs-humans"]);
+                project_routines_1.noneById(["computer-opponents", "name-of-game", "name-of-creator", "create-game",
+                    "start-human", "create-color"]);
+                project_routines_1.blockById(["vs-computer", "vs-humans", "join-page", "size-of-snakes", "speed-of-snakes",
+                    "walls-of-snakes"]);
                 break;
             case (WAIT_HUMAN_NAMING_1):
-                project_routines_1.displayBlockById(["name-of-game", "name-of-creator"]);
+                project_routines_1.noneById(["vs-computer", "vs-humans", "join-page", "create-game"]);
+                project_routines_1.blockById(["name-of-game", "name-of-creator"]);
                 create_game.focusOnAName();
                 break;
             case (WAIT_HUMAN_CREATION_2):
-                project_routines_1.displayBlockById(["name-of-game", "name-of-creator", "create-game"]);
+                project_routines_1.blockById(["name-of-game", "name-of-creator", "create-game"]);
+                project_routines_1.noneById(["start-human"]);
                 break;
             case (WAIT_HUMAN_START_3):
-                project_routines_1.displayInlineById(["start-human"]);
+                project_routines_1.noneById(["name-of-game", "name-of-creator", "create-game"]);
+                project_routines_1.blockById(["start-human"]);
                 break;
             case (WAIT_HUMAN_END_4):
-                project_routines_1.displayInlineById(["create-color"]);
+                project_routines_1.noneById(["size-of-snakes", "speed-of-snakes", "walls-of-snakes", "start-human"]);
+                project_routines_1.blockById(["create-color"]);
                 break;
             default:
                 break;
@@ -111,6 +99,7 @@ const create_game = {
             create_game.visibleHtmlJoin(WAIT_HUMAN_NAMING_1);
         }
         else {
+            create_game.visibleHtmlJoin(WAIT_HUMAN_NAMING_1); // NB for correct hiding/displaying order
             create_game.visibleHtmlJoin(WAIT_HUMAN_CREATION_2);
         }
     },
@@ -156,6 +145,8 @@ const create_game = {
                     milli_turns: snake_speed
                 };
                 game_board.sendMessage(message_object);
+                // inputValueSet("game-name", "")
+                // inputValueSet("create-name", "")
             }
         }
         catch (e) {
@@ -166,7 +157,7 @@ const create_game = {
         const target_element = event.target;
         const target_id_arr = target_element.id.split("-");
         const num_computers = target_id_arr[1];
-        create_game.visibleHtmlJoin(WAIT_COMPUTER_START_C);
+        create_game.visibleHtmlJoin(WAIT_COMPUTER_START_B);
         try {
             const game_name = game_object_1.default.ws_random_key + "_" + game_object_1.default.machine_game_count;
             const create_name = game_object_1.default.ws_random_key + "-" + game_object_1.default.machine_game_count;
@@ -205,7 +196,6 @@ project_routines_1.mouseListenerAdd("computer-4", "click", create_game.sendVersu
 project_routines_1.mouseListenerAdd("computer-5", "click", create_game.sendVersusComputer);
 project_routines_1.mouseListenerAdd("computer-6", "click", create_game.sendVersusComputer);
 project_routines_1.mouseListenerAdd("computer-7", "click", create_game.sendVersusComputer);
-project_routines_1.eventListenerAdd("computer-opponents", "input", create_game.numOpponents);
 project_routines_1.eventListenerAdd("create-name", "input", create_game.notEmptyNames);
 project_routines_1.eventListenerAdd("game-name", "input", create_game.notEmptyNames);
 game_object_1.default.the_websocket.onopen = () => {

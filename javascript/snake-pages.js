@@ -21,6 +21,9 @@ function combineJsHtml(req, res, uuid, hashed_js, file_name) {
             file = file.replace("~~COMMON_GAME_BOARD~~", game_board);
             const hashed_javascript = yield readFile("./javascript/webpack_js_chunks.json", "utf8");
             const hashed_json = JSON.parse(hashed_javascript);
+            const polyfill_bundle = hashed_json.babel_polyfill.js;
+            const polyfill_chunkhash_url = "//" + host_url + "/" + polyfill_bundle;
+            file = file.replace("~~POLYFILL_GAME_ENTRY~~", polyfill_chunkhash_url);
             const common_bundle = hashed_json.common_game_entry.js;
             const common_chunkhash_url = "//" + host_url + "/" + common_bundle;
             file = file.replace("~~COMMON_GAME_ENTRY~~", common_chunkhash_url);

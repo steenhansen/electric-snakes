@@ -18,10 +18,10 @@ const available_boards: IPositions[] = [
                             , {x: 20, y: 38, start_direction: UP_MOVE    , test_moves: []}
                             , {x: 1, y: 20, start_direction: LEFT_MOVE   , test_moves: []}  ]
   , player_positions_current: []
-  , wall_init_lines: [ [1, 12, 3, WALL_VERTICAL]
-                , [2, 25, 3, WALL_VERTICAL]
-                , [3, 20, 3, WALL_HORIZONTAL]
-                , [4, 20, 3, WALL_HORIZONTAL] ]
+  , wall_init_lines: [ [20, 12, 3, WALL_VERTICAL]
+                , [20, 25, 3, WALL_VERTICAL]
+                , [12, 20, 3, WALL_HORIZONTAL]
+                , [25, 20, 3, WALL_HORIZONTAL] ]
   , wall_lines_current: []
 } , { board_height: 40
   , board_width: 30
@@ -74,7 +74,6 @@ function randomBoard(): number {
 const boardPositions = (number_players: number, test_players: boolean[]): IPositions => {
   const board_index = randomBoard()
   const chosen_board: IPositions = available_boards[ board_index ]
-
   chosen_board.player_positions_current = []
   for (let player_index = 0; player_index < number_players; player_index++) {
     chosen_board.player_positions_current[ player_index ] = Object.assign({},

@@ -11,6 +11,7 @@ const game_board = game_object_1.default.the_game_board;
 const join_game = {
     refresh_func_id: 0,
     selected_game: "",
+    have_joined: false,
     missedStart: (missed_game_name) => {
         join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1);
     },
@@ -34,21 +35,28 @@ const join_game = {
         }
     },
     visibleHtmlJoin: (new_join_state) => {
-        project_routines_1.displayNoneById(["join-game", "waiting-for-start", "join-color"]);
-        project_routines_1.hiddenById(["name-of-join", "choose-game"]);
+        console.log('vvvvvvvv', new_join_state);
         switch (new_join_state) {
             case (WAIT_JOIN_NAME_GAME_1):
-                project_routines_1.visibleById(["name-of-join", "choose-game"]);
+                join_game.have_joined = false;
+                console.log('111111111111111111111');
+                project_routines_1.noneById(["join-game", "waiting-for-start", "join-color"]);
+                project_routines_1.blockById(["name-of-join", "choose-game"]);
                 break;
             case (WAIT_JOIN_GAME_2):
-                project_routines_1.visibleById(["name-of-join", "choose-game", "join-game"]);
-                project_routines_1.displayInlineById(["join-game"]);
+                console.log('2222222222222222');
+                project_routines_1.blockById(["join-game"]);
                 break;
             case (WAIT_JOIN_START_3):
-                project_routines_1.displayInlineById(["waiting-for-start"]);
+                console.log('3333333333333');
+                join_game.have_joined = true;
+                project_routines_1.noneById(["name-of-join", "choose-game", "join-game"]);
+                project_routines_1.blockById(["waiting-for-start"]);
                 break;
             case (WAIT_JOIN_PLAYING_4):
-                project_routines_1.displayInlineById(["join-color"]);
+                console.log('4444444444444444444444');
+                project_routines_1.noneById(["waiting-for-start", "join-game"]);
+                project_routines_1.blockById(["join-color"]);
                 break;
             default:
                 break;
@@ -61,20 +69,26 @@ const join_game = {
         join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1);
     },
     showJoinGames: (the_data) => {
-        let select_html = "";
-        let is_selected;
-        for (const game_user_names of the_data) {
-            const [game_name, user_name] = game_user_names.split(WS_MESSAGE_DELIM);
-            if (game_name === join_game.selected_game) {
-                is_selected = " selected ";
+        if (!join_game.have_joined) {
+            let select_html = "";
+            let is_selected;
+            for (const game_user_names of the_data) {
+                const [game_name, user_name] = game_user_names.split(WS_MESSAGE_DELIM);
+                if (game_name === join_game.selected_game) {
+                    is_selected = " selected ";
+                }
+                else {
+                    is_selected = "";
+                }
+                const option = `<option value="${game_name}" ${is_selected}>${game_name} - ${user_name}</option>`;
+                select_html += option;
             }
-            else {
-                is_selected = "";
+            project_routines_1.propertyValueSet("game-name", "innerHTML", select_html);
+            const selected_game = project_routines_1.selectedValueGet("game-name");
+            if (selected_game !== "") {
+                join_game.visibleHtmlJoin(WAIT_JOIN_GAME_2);
             }
-            const option = `<option value="${game_name}" ${is_selected}>${game_name} - ${user_name}</option>`;
-            select_html += option;
         }
-        project_routines_1.propertyValueSet("game-name", "innerHTML", select_html);
     },
     // localhost: 3000/join-game?game_name=TEST_GAME&join_name=TEST_PLAYER_2_
     autoFillGame: () => {

@@ -14,6 +14,7 @@ const game_board = {
     live_colors: [],
     draw_board: {},
     show_players_data: [],
+    count_down_vertical: 0,
     showPlayers: (all_players) => {
         if (!browser_variables_1.default.game_started) {
             if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
@@ -61,6 +62,7 @@ const game_board = {
         game_board.draw_board.drawCanvas(player_game_info);
         project_routines_1.styleValueSet("board-container", "display", "");
         project_routines_1.propertyValueSet("game-results", "innerHTML", "");
+        game_board.count_down_vertical = player_game_info.board_height * tile_size / 2;
         game_board.countDownStart();
     },
     enableKeys: () => {
@@ -80,6 +82,7 @@ const game_board = {
     },
     showCountDown: () => {
         const element = document.getElementById("count-downer");
+        element.style.top = String(game_board.count_down_vertical);
         if (browser_variables_1.default.count_down === browser_variables_1.default.seconds_count_down) {
             element.classList.add("my-count");
             game_board.playerColorElement("count-downer");

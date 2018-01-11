@@ -24,6 +24,7 @@ const game_board: IGameBoard = {
     live_colors: [] as IColorArray,
     draw_board: {} as IDrawBoard,
     show_players_data: [],
+    count_down_vertical: 0,
 
     showPlayers:  (all_players: string[]): void => {
         if ( ! browser_variables.game_started ) {
@@ -71,7 +72,9 @@ const game_board: IGameBoard = {
         game_board.draw_board.drawCanvas(player_game_info)
         styleValueSet("board-container", "display", "")
         propertyValueSet("game-results", "innerHTML", "")
+        game_board.count_down_vertical = player_game_info.board_height * tile_size / 2
         game_board.countDownStart()
+
     },
 
     enableKeys: (): void  => {
@@ -92,8 +95,9 @@ const game_board: IGameBoard = {
     },
 
     showCountDown:  (): void  => {
-        const element = (document.getElementById("count-downer") as HTMLInputElement)
-        if (browser_variables.count_down === browser_variables.seconds_count_down ) {
+        const element: HTMLElement = document.getElementById("count-downer") as HTMLElement
+        element.style.top = String(game_board.count_down_vertical)
+        if (browser_variables.count_down === browser_variables.seconds_count_down) {
             element.classList.add("my-count")
             game_board.playerColorElement("count-downer")
         }

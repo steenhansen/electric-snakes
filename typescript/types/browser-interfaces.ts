@@ -3,7 +3,6 @@ import {ECreateStates, EJoinStates, EMoveTypes} from "./project-enums"
 import {IWebSocket} from "./system-interfaces"
 
 export interface IGameCreate {
-    opponentsValid: () => boolean
     visibleHtmlJoin: (new_create_state: ECreateStates) => void
     areNamesEmpty: () => boolean
     fixEndCreateHtml: () => void
@@ -16,13 +15,13 @@ export interface IGameCreate {
     sendVersusComputer: (event: Event) => void
     autoFillCreate: () => void
     notEmptyNames: () => void
-    numOpponents: () => void
     showMachineGame: () => void
 }
 
 export interface IGameJoin {
     refresh_func_id: number
     selected_game: string
+    have_joined: boolean
     missedStart: (missed_game_name: string) => void
     visibleHtmlJoin: (new_join_state: EJoinStates) => void
     areNamesEmpty: () => boolean
@@ -65,6 +64,7 @@ export interface IGameBoard {
     draw_board: IDrawBoard
     live_colors: IColorArray
     show_players_data: string[]
+    count_down_vertical: number
     initializeGame: (player_game_info: IGameInfo) => void
     enableKeys: () => void
     countDownStart: () => void

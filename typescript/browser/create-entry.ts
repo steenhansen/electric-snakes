@@ -1,8 +1,6 @@
 
-import {
-    displayBlockById, displayInlineById, displayNoneById, eventListenerAdd, focusById, getUrlParamByName,
-    hiddenById, inputValueSet, mouseListenerAdd, propertyValueSet, sanitizeInputValue, sanitizeValue, visibleById
-} from "../project-routines"
+import { blockById, eventListenerAdd, focusById, getUrlParamByName, inputValueSet, mouseListenerAdd,
+    noneById, propertyValueSet, sanitizeInputValue, sanitizeValue} from "../project-routines"
 import {IGameBoard, IGameCreate} from "../types/browser-interfaces"
 import {EActions, ECreateStates} from "../types/project-enums"
 import game_object from "./game-object"
@@ -22,23 +20,6 @@ const {TO_SERVER_createGame, TO_SERVER_startPeople, TO_SERVER_startMachine} = EA
 const game_board: IGameBoard = game_object.the_game_board
 
 const create_game: IGameCreate = {
-    opponentsValid:  (): boolean  => {
-        const computer_opponents = sanitizeInputValue("num-opponents")
-        if (computer_opponents.length > 0) {
-            return true
-        } else {
-            return false
-        }
-    },
-
-    numOpponents: (): void  => {
-        if (create_game.opponentsValid()) {
-            create_game.visibleHtmlJoin(WAIT_COMPUTER_START_B)
-        } else {
-            create_game.visibleHtmlJoin(WAIT_COMPUTER_OPPONENTS_A)
-        }
-    },
-
     focusOnAName: (): void => {
         const active_element = document.activeElement
         if (active_element !== null) {
@@ -50,33 +31,39 @@ const create_game: IGameCreate = {
     },
 
     visibleHtmlJoin: (new_create_state: ECreateStates): void  => {
-        displayNoneById([ "computer-opponents", "name-of-game", "name-of-creator",  "create-game",
-                          "start-human", "create-color"])
-        hiddenById(["vs-computer", "vs-humans"])
+
         switch (new_create_state) {
             case (WAIT_COMPUTER_OPPONENTS_A):
-                displayInlineById(["computer-opponents"])
+                noneById([ "vs-computer", "vs-humans", "join-page"])
+                blockById(["computer-opponents"])
                 break
             case (WAIT_COMPUTER_START_B):
-                displayInlineById(["computer-opponents"])
+                noneById(["size-of-snakes", "speed-of-snakes", "walls-of-snakes", "computer-opponents"])
                 break
             case (WAIT_COMPUTER_START_C):
                 break
             case(WAIT_FOR_CHOICE):
-                visibleById(["vs-computer", "vs-humans"])
+                noneById([ "computer-opponents", "name-of-game", "name-of-creator",  "create-game",
+                           "start-human", "create-color"])
+                blockById([ "vs-computer", "vs-humans", "join-page", "size-of-snakes", "speed-of-snakes",
+                           "walls-of-snakes"])
                 break
             case (WAIT_HUMAN_NAMING_1):
-                displayBlockById(["name-of-game", "name-of-creator"])
+                noneById(["vs-computer", "vs-humans", "join-page",  "create-game"])
+                blockById(["name-of-game", "name-of-creator"])
                 create_game.focusOnAName()
                 break
             case (WAIT_HUMAN_CREATION_2):
-                displayBlockById(["name-of-game", "name-of-creator", "create-game"])
+                blockById(["name-of-game", "name-of-creator", "create-game"])
+                noneById(["start-human"])
                 break
             case (WAIT_HUMAN_START_3):
-                displayInlineById(["start-human"])
+                noneById([ "name-of-game", "name-of-creator",  "create-game"])
+                blockById(["start-human"])
                 break
             case (WAIT_HUMAN_END_4):
-                displayInlineById(["create-color"])
+                noneById(["size-of-snakes", "speed-of-snakes", "walls-of-snakes", "start-human"])
+                blockById(["create-color"])
                 break
             default:
                 break
@@ -132,6 +119,7 @@ const create_game: IGameCreate = {
         if (create_game.areNamesEmpty()) {
             create_game.visibleHtmlJoin(WAIT_HUMAN_NAMING_1)
         } else {
+            create_game.visibleHtmlJoin(WAIT_HUMAN_NAMING_1)    // NB for correct hiding/displaying order
             create_game.visibleHtmlJoin(WAIT_HUMAN_CREATION_2)
         }
     },
@@ -179,6 +167,8 @@ const create_game: IGameCreate = {
                     milli_turns: snake_speed
                 }
                 game_board.sendMessage(message_object)
+               // inputValueSet("game-name", "")
+               // inputValueSet("create-name", "")
             }
         } catch (e) {
             console.error("err", e)
@@ -189,7 +179,7 @@ const create_game: IGameCreate = {
         const target_element: HTMLElement = event.target as HTMLElement
         const target_id_arr = target_element.id.split("-")
         const num_computers = target_id_arr[1]
-        create_game.visibleHtmlJoin(WAIT_COMPUTER_START_C)
+        create_game.visibleHtmlJoin(WAIT_COMPUTER_START_B)
         try {
             const game_name: string = game_object.ws_random_key + "_" + game_object.machine_game_count
             const create_name: string = game_object.ws_random_key + "-" + game_object.machine_game_count
@@ -216,6 +206,7 @@ const create_game: IGameCreate = {
 }
 
 create_game.visibleHtmlJoin(WAIT_FOR_CHOICE)
+
 eventListenerAdd("create-game", "click", create_game.sendCreateGame)
 eventListenerAdd("start-human", "click", create_game.sendStartGame)
 eventListenerAdd("vs-computer", "click", create_game.showMachineGame)
@@ -229,7 +220,6 @@ mouseListenerAdd("computer-5", "click", create_game.sendVersusComputer)
 mouseListenerAdd("computer-6", "click", create_game.sendVersusComputer)
 mouseListenerAdd("computer-7", "click", create_game.sendVersusComputer)
 
-eventListenerAdd("computer-opponents", "input", create_game.numOpponents)
 eventListenerAdd("create-name", "input", create_game.notEmptyNames)
 eventListenerAdd("game-name", "input", create_game.notEmptyNames)
 
