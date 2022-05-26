@@ -1,6 +1,6 @@
 
 
-Electric-Snakes is a multiplayer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
+Electric-Snakes is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
 Interactions are communicated via WebSockets between the single Node.js server and several plain Javascript browsers.
 
 ![visual explanation](https://github.com/steenhansen/electric-snakes/blob/master/electric-snakes.png)
