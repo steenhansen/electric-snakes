@@ -1,50 +1,29 @@
+Electric-Snakes, [https://electric-snakes.herokuapp.com](https://electric-snakes.herokuapp.com/create-game), is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
+Interactions are synchronized via WebSockets between the single coordinating Node.js server and possibly several Javascript browsers.
+The server is a free Heroku dyno, so it can take a few seconds to wake up.
 
+A single player game against seven computer players
 
-Electric-Snakes is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
-Interactions are communicated via WebSockets between the single Node.js server and several plain Javascript browsers.
+![one person](images/electric-snakes.png)
 
-![visual explanation](https://github.com/steenhansen/electric-snakes/blob/master/electric-snakes.png)
+A two player game, called "Battle of Troy" [started](https://electric-snakes.herokuapp.com/create-game) by "Hector" with "Achilles" [joining](https://electric-snakes.herokuapp.com/join-game).
+One person "creates" and names the game. While others can join in.
 
+![two people](images/two-browsers.png)
 
-## Live Example
-	
-### To create a multiplayer game or play against the computer
-[https://electric-snakes.herokuapp.com/create-game](https://electric-snakes.herokuapp.com/create-game)
+### Prepare Environment
 
-### To join a multiplayer game	
-[https://electric-snakes.herokuapp.com/join-game](https://electric-snakes.herokuapp.com/join-game)
+- nvm install 18.2.0
 
-## Architecture
+- nvm use 18.2.0
 
-Browser and Node.js share one TypeScript TSLinted code base via Webpack. The syncroniztion of different games and snakes is done with Redux using Immutable.js collections.
+### Run program
 
-## Compile
+    $ npm start
 
 ### Compile all and run from scratch:
 
     $ npm install
-	$ gulp build
-	$ npm start
-
-### Compile changes and run via watches:
-
-	$ tsc -w                   
-	$ gulp ts_watch              
-	$ gulp run_watch 
-	$ gulp tslint_watch
-
-### Compile changes separately and run:
-
-	$ tsc                
-	$ gulp webpack_js             
-	$ tslint -p tsconfig.json
-	$ npm start  or  npm test
-
-### To create a local multiplayer game or play against the computer
-[http://localhost:3000/create-game](http://localhost:3000/create-game)
-
-
-### To join a local multiplayer game	
-[http://localhost:3000/join-game](http://localhost:3000/join-game)
-
-
+    $ npx tsc
+    $ npx webpack-cli
+    $ npm start  or  npm test

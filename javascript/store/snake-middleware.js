@@ -27,7 +27,7 @@ function gameList_mw(action, next, state) {
                 }
             }
         });
-        project_routines_1.sendSocket(action.web_socket, TO_BROWSER_gameList, game_names);
+        (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_gameList, game_names);
     }
     catch (e) {
         e.name = "gameList_mw";
@@ -48,16 +48,16 @@ function joinGame_mw(action, next, state) {
                 const new_player_number = players_in_game.count() + 1;
                 if (new_player_number <= MAX_PLAYERS) {
                     action.player_number = new_player_number;
-                    project_routines_1.sendSocket(action.web_socket, TO_BROWSER_your_color, action.player_number);
+                    (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_your_color, action.player_number);
                     next(action);
                 }
                 else {
-                    project_routines_1.sendSocket(action.web_socket, TO_BROWSER_9_players, action.game_name);
+                    (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_9_players, action.game_name);
                 }
             }
         }
         else {
-            project_routines_1.sendSocket(action.web_socket, TO_BROWSER_missedStart, action.game_name);
+            (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_missedStart, action.game_name);
         }
     }
     catch (e) {
@@ -72,7 +72,7 @@ function createGame_mw(action, next, state) {
             const abandoned_game_name = the_player.game_name;
             state.hosted_games = state.hosted_games.delete(abandoned_game_name);
         }
-        project_routines_1.sendSocket(action.web_socket, TO_BROWSER_your_color, 1);
+        (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_your_color, 1);
         next(action);
     }
     catch (e) {
@@ -112,7 +112,7 @@ function startPeople_mw(action, next, state) {
             const canned_moves = loadTestPlayerMoves(players_in_game);
             if ((typeof action.size_of_snake === "number") && (typeof action.turns_in_milli === "number")
                 && (typeof action.snake_walls === "boolean")) {
-                action.snake_game = game_factory_1.default(players_in_game.count(), canned_moves, action.size_of_snake, action.snake_walls, action.turns_in_milli);
+                action.snake_game = (0, game_factory_1.default)(players_in_game.count(), canned_moves, action.size_of_snake, action.snake_walls, action.turns_in_milli);
                 const board_json = action.snake_game.jsonBoard();
                 const color_index = board_colors_1.BoardColors.randomColors();
                 players_in_game.forEach((human_player) => {
@@ -130,7 +130,7 @@ function startPeople_mw(action, next, state) {
                                 color_index,
                                 config_testing_vars: testingVars()
                             };
-                            project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_startPeople, player_game_info);
+                            (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_startPeople, player_game_info);
                         }
                     }
                 });
@@ -139,7 +139,7 @@ function startPeople_mw(action, next, state) {
             next(action);
         }
         else {
-            project_routines_1.sendSocket(action.web_socket, TO_BROWSER_2_to_tango, action.game_name);
+            (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_2_to_tango, action.game_name);
         }
     }
     catch (e) {
@@ -161,7 +161,7 @@ function startMachine_mw(action, next, state) {
         }
         if ((typeof action.size_of_snake === "number") && (typeof action.turns_in_milli === "number")
             && (typeof action.snake_walls === "boolean")) {
-            action.snake_game = game_factory_1.default(number_players, canned_moves, action.size_of_snake, action.snake_walls, action.turns_in_milli);
+            action.snake_game = (0, game_factory_1.default)(number_players, canned_moves, action.size_of_snake, action.snake_walls, action.turns_in_milli);
             const board_json = action.snake_game.jsonBoard();
             const snake = action.snake_game.player_snakes.get(human_player.player_number);
             const board_width = action.snake_game.boardWidth();
@@ -174,7 +174,7 @@ function startMachine_mw(action, next, state) {
                 config_testing_vars: testingVars(),
                 test_moves: snake.test_moves
             };
-            project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_startMachine, player_game_info);
+            (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_startMachine, player_game_info);
             action.snake_game.firstMoveTime();
         }
         next(action);
@@ -206,7 +206,7 @@ function advanceBoard_mw(action, next, state) {
         const last_board_moves = snake_game.lastBoardMoves();
         players_in_game.forEach((human_player) => {
             if (typeof human_player !== "undefined") {
-                project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_all_moves, last_board_moves);
+                (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_all_moves, last_board_moves);
             }
         });
         next(action);
@@ -225,7 +225,7 @@ function crashTurn_mw(action, next, state) {
         if (crashed_snakes.length > 0) {
             players_in_game.forEach((human_player) => {
                 if (typeof human_player !== "undefined") {
-                    project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_crashTurn, crashed_snakes);
+                    (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_crashTurn, crashed_snakes);
                 }
             });
         }
@@ -266,7 +266,7 @@ function announceWinner_mw(action, next, state) {
         players_in_game.forEach((human_player) => {
             const winner_number_str = String(winner_number);
             if (typeof human_player !== "undefined") {
-                project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_announceWinner, [winner_number_str, winner_name]);
+                (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_announceWinner, [winner_number_str, winner_name]);
             }
         });
         next(action);
@@ -281,7 +281,7 @@ function announceTie_mw(action, next, state) {
         const players_in_game = playersInGame(state, action.game_name);
         players_in_game.forEach((human_player) => {
             if (typeof human_player !== "undefined") {
-                project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_announceTie, "");
+                (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_announceTie, "");
             }
         });
         next(action);
@@ -304,7 +304,7 @@ function announceNames_mw(action, next, state) {
         });
         players_in_game.forEach((human_player) => {
             if (typeof human_player !== "undefined") {
-                project_routines_1.sendSocket(human_player.web_socket, TO_BROWSER_announceNames, player_names);
+                (0, project_routines_1.sendSocket)(human_player.web_socket, TO_BROWSER_announceNames, player_names);
             }
         });
         next(action);
@@ -363,7 +363,7 @@ const snake_middleware = (store) => (next) => (action) => {
     }
     catch (e) {
         if (typeof action.web_socket !== "undefined") {
-            project_routines_1.sendSocket(action.web_socket, TO_BROWSER_timeout, e.name);
+            (0, project_routines_1.sendSocket)(action.web_socket, TO_BROWSER_timeout, e.name);
         }
     }
 };

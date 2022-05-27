@@ -5,6 +5,8 @@ import {IGameBoard, IGameCreate} from "../types/browser-interfaces"
 import {EActions, ECreateStates} from "../types/project-enums"
 import game_object from "./game-object"
 
+require("@babel/polyfill");
+
 const {
     WAIT_COMPUTER_OPPONENTS_A
     , WAIT_COMPUTER_START_B

@@ -26,10 +26,10 @@ const game_board: IGameBoard = {
     show_players_data: [],
     count_down_vertical: 0,
 
-    showPlayers:  (all_players: string[]): void => {
+    showPlayers: (all_players: string[]): void => {
         if ( ! browser_variables.game_started ) {
-            if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
-                window.GLOBAL_WEBPACK.create_game_entry.create_game.enableStartButton()
+            if (typeof window.GLOBAL_WEBPACK.create_game === "object") {
+                window.GLOBAL_WEBPACK.create_game.enableStartButton()
             }
             let players_html = ""
             let user_name
@@ -144,20 +144,20 @@ const game_board: IGameBoard = {
     },
 
     fixStartHtml: (): void  => {
-        if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
-            window.GLOBAL_WEBPACK.create_game_entry.create_game.fixStartCreateHtml()
+        if (typeof window.GLOBAL_WEBPACK.create_game === "object") {
+            window.GLOBAL_WEBPACK.create_game.fixStartCreateHtml()
             game_board.playerColorElement("create-color")
-        } else if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.fixStartJoinHtml()
+        } else if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.fixStartJoinHtml()
             game_board.playerColorElement("join-color")
         }
     },
 
     fixEndHtml:  (): void  => {
-        if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
-            window.GLOBAL_WEBPACK.create_game_entry.create_game.fixEndCreateHtml()
-        } else if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.fixEndJoinHtml()
+        if (typeof window.GLOBAL_WEBPACK.create_game=== "object") {
+            window.GLOBAL_WEBPACK.create_game.fixEndCreateHtml()
+        } else if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.fixEndJoinHtml()
         }
     },
 
@@ -232,7 +232,6 @@ browser_variables.the_websocket.onmessage = (event: MessageEvent): void => {
     const json_obj = JSON.parse(event.data)
     const the_message = json_obj.message_type
     const player_game_info = json_obj.data
-
     if (the_message === TO_BROWSER_startMachine) {
         game_board.show_players_data = []
         game_board.showPlayers([])
@@ -259,12 +258,12 @@ browser_variables.the_websocket.onmessage = (event: MessageEvent): void => {
     } else if (the_message === TO_BROWSER_timeout) {
         styleValueSet("timed-out", "display", "block")
     } else if (the_message === TO_BROWSER_gameList) {
-        if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.showJoinGames(player_game_info)
+        if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.showJoinGames(player_game_info)
         }
      } else if (the_message === TO_BROWSER_missedStart) {
-        if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.missedStart(player_game_info)
+        if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.missedStart(player_game_info)
         }
     } else {
         console.error("ERROR game-objects :  unknown message = ", the_message)

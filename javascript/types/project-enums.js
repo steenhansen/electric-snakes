@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EActions = exports.EMoveTypes = exports.ECreateStates = exports.EJoinStates = exports.EPlayerStates = exports.EGameStates = exports.EWallTypes = void 0;
 var EWallTypes;
 (function (EWallTypes) {
     EWallTypes["WALL_HORIZONTAL"] = "wall_horizontal";

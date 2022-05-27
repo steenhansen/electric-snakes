@@ -79,7 +79,7 @@ const boardPositions = (number_players, test_players) => {
     chosen_board.wall_lines_current = chosen_board.wall_init_lines.slice(0);
     for (let player_index = 0; player_index < number_players; player_index++) {
         if (test_players[player_index]) {
-            const canned_moves = canned_moves_1.default();
+            const canned_moves = (0, canned_moves_1.default)();
             chosen_board.player_positions_current[player_index].test_moves = canned_moves;
             chosen_board.player_positions_current[player_index].start_direction = canned_moves[0];
         }

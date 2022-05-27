@@ -4,7 +4,7 @@ const immutable_1 = require("immutable");
 const board_positions_1 = require("./board-positions");
 const SnakeGame_1 = require("./SnakeGame");
 const SnakeFactory = (number_players, test_players, size_of_snake, snake_walls, turns_in_milli) => {
-    const random_board = board_positions_1.default(number_players, test_players);
+    const random_board = (0, board_positions_1.default)(number_players, test_players);
     if (!snake_walls) {
         random_board.wall_lines_current = [];
     }
@@ -18,7 +18,7 @@ const SnakeFactory = (number_players, test_players, size_of_snake, snake_walls, 
         snake_walls,
         wall_lines_current: random_board.wall_lines_current
     };
-    const board_options = immutable_1.Map(board_obj);
+    const board_options = (0, immutable_1.Map)(board_obj);
     const snake_game = new SnakeGame_1.default(board_options);
     return snake_game;
 };

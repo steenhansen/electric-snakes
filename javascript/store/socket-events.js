@@ -25,7 +25,7 @@ const socketEvents = (user_connections, game_store) => {
     socket_events.createGame_ws = (uuid_key, game_name, user_name) => {
         if (typeof user_connections[uuid_key] !== "undefined") {
             const web_socket = user_connections[uuid_key].web_socket;
-            const register_date = project_routines_1.dateInSeconds();
+            const register_date = (0, project_routines_1.dateInSeconds)();
             game_store.dispatch(action_types_1.default.createGame_ac(uuid_key, web_socket, user_name, game_name, register_date));
         }
     };
@@ -76,22 +76,22 @@ const socketEvents = (user_connections, game_store) => {
     };
     socket_events.startPeople_ws = (uuid_key, game_name, create_name, snake_size, snake_walls_text, milli_turns) => {
         if (typeof user_connections[uuid_key] !== "undefined") {
-            const size_of_snake = project_routines_1.decodeSnakeSize(snake_size);
-            const turns_in_milli = project_routines_1.decodeSnakeSpeed(milli_turns);
+            const size_of_snake = (0, project_routines_1.decodeSnakeSize)(snake_size);
+            const turns_in_milli = (0, project_routines_1.decodeSnakeSpeed)(milli_turns);
             const web_socket = user_connections[uuid_key].web_socket;
-            const register_date = project_routines_1.dateInSeconds();
-            const snake_walls = project_routines_1.decodeSnakeWalls(snake_walls_text);
+            const register_date = (0, project_routines_1.dateInSeconds)();
+            const snake_walls = (0, project_routines_1.decodeSnakeWalls)(snake_walls_text);
             game_store.dispatch(action_types_1.default.startPeople_ac(web_socket, game_name, create_name, register_date, size_of_snake, snake_walls, turns_in_milli));
         }
     };
     socket_events.startMachine_ws = (uuid_key, game_name, user_name, num_computers, snake_size, snake_walls_text, milli_turns) => {
         if (typeof user_connections[uuid_key] !== "undefined") {
             const number_computers = Number.parseInt(num_computers);
-            const size_of_snake = project_routines_1.decodeSnakeSize(snake_size);
-            const turns_in_milli = project_routines_1.decodeSnakeSpeed(milli_turns);
+            const size_of_snake = (0, project_routines_1.decodeSnakeSize)(snake_size);
+            const turns_in_milli = (0, project_routines_1.decodeSnakeSpeed)(milli_turns);
             const web_socket = user_connections[uuid_key].web_socket;
-            const register_date = project_routines_1.dateInSeconds();
-            const snake_walls = project_routines_1.decodeSnakeWalls(snake_walls_text);
+            const register_date = (0, project_routines_1.dateInSeconds)();
+            const snake_walls = (0, project_routines_1.decodeSnakeWalls)(snake_walls_text);
             game_store.dispatch(action_types_1.default.createGame_ac(uuid_key, web_socket, user_name, game_name, register_date));
             game_store.dispatch(action_types_1.default.startMachine_ac(game_name, register_date, number_computers, size_of_snake, snake_walls, turns_in_milli));
         }
@@ -99,9 +99,9 @@ const socketEvents = (user_connections, game_store) => {
     socket_events.incomingMessage = (message) => {
         const message_obj = JSON.parse(message);
         const { message_type, uuid_key, create_name, game_name, user_name, num_computer, snake_size, milli_turns, move_direction, browser_turn, snake_walls } = message_obj;
-        const create_name_sanitized = project_routines_1.sanitizeValue(create_name);
-        const game_name_sanitized = project_routines_1.sanitizeValue(game_name);
-        const user_name_sanitized = project_routines_1.sanitizeValue(user_name);
+        const create_name_sanitized = (0, project_routines_1.sanitizeValue)(create_name);
+        const game_name_sanitized = (0, project_routines_1.sanitizeValue)(game_name);
+        const user_name_sanitized = (0, project_routines_1.sanitizeValue)(user_name);
         if (message_type === TO_SERVER_moveSnake) {
             socket_events.moveGame_ws(uuid_key, move_direction, Number.parseInt(browser_turn));
         }
@@ -125,7 +125,7 @@ const socketEvents = (user_connections, game_store) => {
         }
     };
     socket_events.deleteTimedOutGames = (seconds_time_out) => {
-        const now_seconds = project_routines_1.dateInSeconds();
+        const now_seconds = (0, project_routines_1.dateInSeconds)();
         const game_state = game_store.getState();
         let delete_seconds;
         if (typeof global.CONFIG_TESTING_VARS === "undefined") {
@@ -154,7 +154,7 @@ const socketEvents = (user_connections, game_store) => {
         }
     };
     socket_events.deleteTimedOutHumans = (seconds_time_out) => {
-        const now_seconds = project_routines_1.dateInSeconds();
+        const now_seconds = (0, project_routines_1.dateInSeconds)();
         let delete_seconds;
         if (typeof global.CONFIG_TESTING_VARS === "undefined") {
             delete_seconds = now_seconds - seconds_time_out;

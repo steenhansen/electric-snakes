@@ -83,7 +83,7 @@ function moveMachine_rd(state, action) {
             if (player_number !== HUMAN_PLAYER_NUMBER) {
                 if (typeof machine_board_player !== "undefined") {
                     if (machine_board_player.test_moves.length === machine_board_player.turn_number) {
-                        const canned_test_moves = canned_moves_1.default();
+                        const canned_test_moves = (0, canned_moves_1.default)();
                         machine_board_player.test_moves = machine_board_player.test_moves.concat(canned_test_moves);
                     }
                     const the_machine_move = machine_board_player.test_moves[machine_board_player.turn_number];

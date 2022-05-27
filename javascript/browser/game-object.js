@@ -17,8 +17,8 @@ const game_board = {
     count_down_vertical: 0,
     showPlayers: (all_players) => {
         if (!browser_variables_1.default.game_started) {
-            if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
-                window.GLOBAL_WEBPACK.create_game_entry.create_game.enableStartButton();
+            if (typeof window.GLOBAL_WEBPACK.create_game === "object") {
+                window.GLOBAL_WEBPACK.create_game.enableStartButton();
             }
             let players_html = "";
             let user_name;
@@ -29,11 +29,11 @@ const game_board = {
                 else {
                     const rgb_color = game_board.live_colors[index];
                     const plain_name = all_players[index];
-                    user_name = project_routines_1.colorTextSpan(rgb_color, plain_name);
+                    user_name = (0, project_routines_1.colorTextSpan)(rgb_color, plain_name);
                 }
                 players_html = players_html + "<div> Player # " + index + " - " + user_name + "</div>";
             }
-            project_routines_1.propertyValueSet("game-names", "innerHTML", players_html);
+            (0, project_routines_1.propertyValueSet)("game-names", "innerHTML", players_html);
         }
     },
     initializeGame: (player_game_info) => {
@@ -60,22 +60,22 @@ const game_board = {
         game_board.enableKeys();
         browser_variables_1.default.next_key_move = CONTINUE_MOVE;
         game_board.draw_board.drawCanvas(player_game_info);
-        project_routines_1.styleValueSet("board-container", "display", "");
-        project_routines_1.propertyValueSet("game-results", "innerHTML", "");
+        (0, project_routines_1.styleValueSet)("board-container", "display", "");
+        (0, project_routines_1.propertyValueSet)("game-results", "innerHTML", "");
         game_board.count_down_vertical = player_game_info.board_height * tile_size / 2;
         game_board.countDownStart();
     },
     enableKeys: () => {
         document.addEventListener("keydown", (event) => {
             const key_code = event.keyCode;
-            const key_move_direction = project_routines_1.upDownLeftRight(key_code, LEFT_HAND_UDLR_KEYS, RIGHT_HAND_UDLR_KEYS);
+            const key_move_direction = (0, project_routines_1.upDownLeftRight)(key_code, LEFT_HAND_UDLR_KEYS, RIGHT_HAND_UDLR_KEYS);
             browser_variables_1.default.next_key_move = key_move_direction;
         });
     },
     countDownStart: () => {
         const player_color = game_board.live_colors[browser_variables_1.default.your_player_number];
         const container_border_style = browser_variables_1.default.tile_size / 2 + "px solid " + player_color;
-        project_routines_1.styleValueSet("board-container", "border", container_border_style);
+        (0, project_routines_1.styleValueSet)("board-container", "border", container_border_style);
         browser_variables_1.default.count_down_func_id = window.setInterval(game_board.showCountDown, ONE_SECOND);
         const count_down_milliseconds = ONE_SECOND * (browser_variables_1.default.seconds_count_down + 1);
         setTimeout(game_board.startGame, count_down_milliseconds);
@@ -115,33 +115,33 @@ const game_board = {
         let win_message;
         if (winner_number === browser_variables_1.default.your_player_number) {
             const your_color = game_board.live_colors[browser_variables_1.default.your_player_number];
-            win_message = project_routines_1.colorTextSpan(your_color, "You are the Winner!");
+            win_message = (0, project_routines_1.colorTextSpan)(your_color, "You are the Winner!");
         }
         else {
             const enemy_color = game_board.live_colors[winner_number];
-            const colored_number = project_routines_1.colorTextSpan(enemy_color, winner_number_str);
-            const colored_name = project_routines_1.colorTextSpan(enemy_color, winner_name);
+            const colored_number = (0, project_routines_1.colorTextSpan)(enemy_color, winner_number_str);
+            const colored_name = (0, project_routines_1.colorTextSpan)(enemy_color, winner_name);
             win_message = "You lose. " + colored_name + "player # " + colored_number + "is the winner.";
         }
-        project_routines_1.propertyValueSet("game-results", "innerHTML", win_message);
+        (0, project_routines_1.propertyValueSet)("game-results", "innerHTML", win_message);
         game_board.fixEndHtml();
     },
     fixStartHtml: () => {
-        if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
-            window.GLOBAL_WEBPACK.create_game_entry.create_game.fixStartCreateHtml();
+        if (typeof window.GLOBAL_WEBPACK.create_game === "object") {
+            window.GLOBAL_WEBPACK.create_game.fixStartCreateHtml();
             game_board.playerColorElement("create-color");
         }
-        else if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.fixStartJoinHtml();
+        else if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.fixStartJoinHtml();
             game_board.playerColorElement("join-color");
         }
     },
     fixEndHtml: () => {
-        if (typeof window.GLOBAL_WEBPACK.create_game_entry === "object") {
-            window.GLOBAL_WEBPACK.create_game_entry.create_game.fixEndCreateHtml();
+        if (typeof window.GLOBAL_WEBPACK.create_game === "object") {
+            window.GLOBAL_WEBPACK.create_game.fixEndCreateHtml();
         }
-        else if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.fixEndJoinHtml();
+        else if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.fixEndJoinHtml();
         }
     },
     readyForGame: () => {
@@ -152,12 +152,12 @@ const game_board = {
     },
     showTie: () => {
         game_board.readyForGame();
-        project_routines_1.propertyValueSet("game-results", "innerHTML", "we have a tie !");
+        (0, project_routines_1.propertyValueSet)("game-results", "innerHTML", "we have a tie !");
         game_board.fixEndHtml();
     },
     playerColorElement: (element_id) => {
         const player_color = game_board.live_colors[browser_variables_1.default.your_player_number];
-        project_routines_1.styleValueSet(element_id, "color", player_color);
+        (0, project_routines_1.styleValueSet)(element_id, "color", player_color);
     },
     setPlayerNumber: (player_number) => {
         browser_variables_1.default.your_player_number = player_number;
@@ -237,22 +237,22 @@ browser_variables_1.default.the_websocket.onmessage = (event) => {
         game_board.showPlayers(player_game_info);
     }
     else if (the_message === TO_BROWSER_2_to_tango) {
-        project_routines_1.never_needTwoToTango(player_game_info);
+        (0, project_routines_1.never_needTwoToTango)(player_game_info);
     }
     else if (the_message === TO_BROWSER_9_players) {
-        project_routines_1.never_nineMakesACrowd(player_game_info);
+        (0, project_routines_1.never_nineMakesACrowd)(player_game_info);
     }
     else if (the_message === TO_BROWSER_timeout) {
-        project_routines_1.styleValueSet("timed-out", "display", "block");
+        (0, project_routines_1.styleValueSet)("timed-out", "display", "block");
     }
     else if (the_message === TO_BROWSER_gameList) {
-        if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.showJoinGames(player_game_info);
+        if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.showJoinGames(player_game_info);
         }
     }
     else if (the_message === TO_BROWSER_missedStart) {
-        if (typeof window.GLOBAL_WEBPACK.join_game_entry === "object") {
-            window.GLOBAL_WEBPACK.join_game_entry.join_game.missedStart(player_game_info);
+        if (typeof window.GLOBAL_WEBPACK.join_game === "object") {
+            window.GLOBAL_WEBPACK.join_game.missedStart(player_game_info);
         }
     }
     else {

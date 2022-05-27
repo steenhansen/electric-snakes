@@ -11,9 +11,9 @@ class PlayerSnake {
         this.snake_direction = snake_options.snake_direction;
         this.has_crashed = false;
         const start_xy = snake_options.xy;
-        this.snake_segments = immutable_1.List().push(start_xy);
+        this.snake_segments = (0, immutable_1.List)().push(start_xy);
         this.turn_number = 0;
-        this.last_empty = project_factories_1.XyNull();
+        this.last_empty = (0, project_factories_1.XyNull)();
         if (typeof snake_options.test_moves === "undefined") {
             this.test_moves = [];
         }
@@ -60,7 +60,7 @@ class PlayerSnake {
         else if (new_direction === RIGHT_MOVE) {
             x = x + 1;
         }
-        const xy = project_factories_1.XyFactory({ x, y });
+        const xy = (0, project_factories_1.XyFactory)({ x, y });
         return xy;
     }
     headSnake() {
@@ -77,7 +77,7 @@ class PlayerSnake {
             this.snake_segments = this.snake_segments.shift();
         }
         else {
-            new_empty = project_factories_1.XyNull();
+            new_empty = (0, project_factories_1.XyNull)();
         }
         return new_empty;
     }

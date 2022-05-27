@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sanitizeInputValue = exports.sanitizeValue = exports.decodeSnakeWalls = exports.decodeSnakeSpeed = exports.decodeSnakeSize = exports.setUpTesting = exports.getArgByIndex = exports.styleValueSet = exports.selectedValueGet = exports.propertyValueSet = exports.inputValueSet = exports.upDownLeftRight = exports.colorTextSpan = exports.never_nineMakesACrowd = exports.never_needTwoToTango = exports.getUrlParamByName = exports.focusById = exports.noneById = exports.blockById = exports.eventListenerAdd = exports.mouseListenerAdd = exports.dateInSeconds = exports.sendSocket = void 0;
 const global_test_config_1 = require("./global_test_config");
 const project_constants_1 = require("./project-constants");
 const project_enums_1 = require("./types/project-enums");
 const { TINY_SNAKE_SIZE, MEDIUM_SNAKE_SIZE, LARGE_SNAKE_SIZE, SLOW_SNAKE_SPEED, AVERAGE_SNAKE_SPEED, FAST_SNAKE_SPEED } = project_constants_1.default;
 const { DOWN_MOVE, UP_MOVE, LEFT_MOVE, RIGHT_MOVE, CONTINUE_MOVE } = project_enums_1.EMoveTypes;
-exports.sendSocket = (user_websocket, message_type, message_data) => {
+let sendSocket = (user_websocket, message_type, message_data) => {
     const socket_data = {
         data: message_data,
         message_type
@@ -18,6 +19,7 @@ exports.sendSocket = (user_websocket, message_type, message_data) => {
         console.error("sendSocket error", e.message, socket_data, user_websocket);
     }
 };
+exports.sendSocket = sendSocket;
 function dateInSeconds() {
     const date_seconds = Number(new Date());
     return Math.floor(date_seconds / 1000);

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DrawBoard = void 0;
 const project_constants_1 = require("../project-constants");
 const { WS_MESSAGE_DELIM, CTX_WALL_COLOR } = project_constants_1.default;
 const board_canvas = document.getElementById("board-container");

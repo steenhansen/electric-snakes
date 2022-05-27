@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BoardColors = void 0;
 const available_colors = [
     ["rgb(255, 255, 255)" // 0 is background is white
         ,

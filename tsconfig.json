@@ -1,11 +1,10 @@
 {
-	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es6",
-		"strict": true,
-		"sourceMap": false
-	},
-	"include": [
-		"./typescript/**/*.ts"
-	]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "strict": false,
+    "sourceMap": false,
+    "outDir": "javascript/"
+  },
+  "include": ["./typescript/**/*.ts"]
 }

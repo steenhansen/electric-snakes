@@ -6,6 +6,8 @@ import {IGameBoard, IGameJoin} from "../types/browser-interfaces"
 import {EActions, EJoinStates} from "../types/project-enums"
 import game_object from "./game-object"
 
+require("@babel/polyfill");
+
 const {WAIT_JOIN_NAME_GAME_1, WAIT_JOIN_GAME_2, WAIT_JOIN_START_3, WAIT_JOIN_PLAYING_4} = EJoinStates
 const {TO_SERVER_joinGame, TO_SERVER_gameList} = EActions
 const {ONE_SECOND, WS_MESSAGE_DELIM} = project_constants
@@ -18,11 +20,13 @@ const join_game: IGameJoin = {
     selected_game: "",
     have_joined: false,
 
-    missedStart: (missed_game_name: string): void  =>  {
+    missedStart: (missed_game_name: string): void => {
+                       console.log('missedStart')
         join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1)
     },
 
-    areNamesEmpty: (): boolean  => {
+    areNamesEmpty: (): boolean => {
+                  console.log('areNamesEmpty')
         const game_name = sanitizeInputValue("game-name")
         const join_name = sanitizeInputValue("join-name")
         if (game_name.length === 0 || join_name.length === 0) {
@@ -33,7 +37,8 @@ const join_game: IGameJoin = {
         }
     },
 
-    notEmptyNames: ()  => {
+    notEmptyNames: () => {
+                          console.log('notEmptyNames')
         if (join_game.areNamesEmpty()) {
             join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1)
         } else {
@@ -41,7 +46,8 @@ const join_game: IGameJoin = {
         }
     },
 
-    visibleHtmlJoin: (new_join_state: EJoinStates): void  => {
+    visibleHtmlJoin: (new_join_state: EJoinStates): void => {
+                  console.log('visibleHtmlJoin')
         switch (new_join_state) {
             case(WAIT_JOIN_NAME_GAME_1):
                 join_game.have_joined = false
@@ -65,15 +71,18 @@ const join_game: IGameJoin = {
         }
     },
 
-    fixStartJoinHtml: ()  => {
+    fixStartJoinHtml: () => {
+                console.log('fixStartJoinHtml')
         join_game.visibleHtmlJoin(WAIT_JOIN_PLAYING_4)
     },
 
     fixEndJoinHtml: ()  => {
+                console.log('visibleHtmlJoin')
         join_game.visibleHtmlJoin(WAIT_JOIN_NAME_GAME_1)
     },
 
-    showJoinGames: (the_data: string[]): void =>  {
+    showJoinGames: (the_data: string[]): void => {
+        console.log('showJoinGames the_data', the_data)
         if (!join_game.have_joined) {
             let select_html = ""
             let is_selected
@@ -95,7 +104,7 @@ const join_game: IGameJoin = {
         }
     },
 
-    // localhost: 3000/join-game?game_name=TEST_GAME&join_name=TEST_PLAYER_2_
+    // localhost:3000/join-game?game_name=TEST_GAME&join_name=TEST_PLAYER_2_
     autoFillGame: (): void => {
         if (typeof getUrlParamByName === "function") {
             const game_name: string = sanitizeValue(getUrlParamByName("game_name"))
@@ -112,6 +121,7 @@ const join_game: IGameJoin = {
     },
 
     sendJoinGame: () => {
+          console.log('sendJoinGame')
         try {
             const join_name = sanitizeInputValue("join-name")
             const game_name = sanitizeInputValue("game-name")
@@ -131,6 +141,7 @@ const join_game: IGameJoin = {
     },
 
     sendRefreshedGames: () => {
+                console.log('sendRefreshedGames')
         try {
             if (typeof game_board.sendMessage === "function") {
                 const message_object = {

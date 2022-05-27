@@ -15,8 +15,8 @@ class SnakeGame {
         this.max_size = board_options.get("max_size");
         this.wall_lines_current = board_options.get("wall_lines_current");
         this.player_current_positions = board_options.get("player_positions_current");
-        this.player_snakes = immutable_1.Map();
-        this.xy_board_colors = immutable_1.Map();
+        this.player_snakes = (0, immutable_1.Map)();
+        this.xy_board_colors = (0, immutable_1.Map)();
         this.createBoard();
         this.createSnakes();
         this.board_turn = 0;
@@ -113,7 +113,7 @@ class SnakeGame {
         const self = this;
         this.player_current_positions.forEach((player, index) => {
             const player_number = index + 1;
-            const xy = project_factories_1.XyFactory({ x: player.x, y: player.y });
+            const xy = (0, project_factories_1.XyFactory)({ x: player.x, y: player.y });
             const the_player_direction = player.start_direction;
             const the_test_moves = player.test_moves;
             const snake_options = {
@@ -166,7 +166,7 @@ class SnakeGame {
         let console_print = "";
         for (let row = 0; row < this.board_height; row++) {
             for (let column = 0; column < this.board_width; column++) {
-                const xy = project_factories_1.XyFactory({ x: column, y: row });
+                const xy = (0, project_factories_1.XyFactory)({ x: column, y: row });
                 console_print += this.xy_board_colors.get(xy);
             }
             console_print += "\n";
@@ -178,7 +178,7 @@ class SnakeGame {
         for (let row = 0; row < this.board_height; row++) {
             the_data[row] = [];
             for (let column = 0; column < this.board_width; column++) {
-                const xy = project_factories_1.XyFactory({ x: column, y: row });
+                const xy = (0, project_factories_1.XyFactory)({ x: column, y: row });
                 the_data[row][column] = this.xy_board_colors.get(xy);
             }
         }
@@ -217,25 +217,25 @@ class SnakeGame {
         else if (y >= this.board_height) {
             y = 0;
         }
-        const xy = project_factories_1.XyFactory({ x, y });
+        const xy = (0, project_factories_1.XyFactory)({ x, y });
         return xy;
     }
     drawWall(column, row, length, type) {
         if (type === WALL_HORIZONTAL) {
             for (let h_step = 0; h_step < length; h_step++) {
-                const xy = project_factories_1.XyFactory({ x: column + h_step, y: row });
+                const xy = (0, project_factories_1.XyFactory)({ x: column + h_step, y: row });
                 this.xy_board_colors = this.xy_board_colors.set(xy, WALL_INDEX_COLOR);
             }
         }
         else if (type === WALL_VERTICAL) {
             for (let v_step = 0; v_step < length; v_step++) {
-                const xy = project_factories_1.XyFactory({ x: column, y: row + v_step });
+                const xy = (0, project_factories_1.XyFactory)({ x: column, y: row + v_step });
                 this.xy_board_colors = this.xy_board_colors.set(xy, WALL_INDEX_COLOR);
             }
         }
         else if (type === WALL_DIAGONAL) {
             for (let d_step = 0; d_step < length; d_step++) {
-                const xy = project_factories_1.XyFactory({ x: column + d_step, y: row + d_step });
+                const xy = (0, project_factories_1.XyFactory)({ x: column + d_step, y: row + d_step });
                 this.xy_board_colors = this.xy_board_colors.set(xy, WALL_INDEX_COLOR);
             }
         }
@@ -243,7 +243,7 @@ class SnakeGame {
     zeroBoard(empty_cell) {
         for (let column = 0; column < this.board_width; column++) {
             for (let row = 0; row < this.board_height; row++) {
-                const xy = project_factories_1.XyFactory({ x: column, y: row });
+                const xy = (0, project_factories_1.XyFactory)({ x: column, y: row });
                 this.xy_board_colors = this.xy_board_colors.set(xy, empty_cell);
             }
         }
