@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run heroku-init",
-    "heroku-init": "node app/javascript/web-server.js",
+    "heroku-init": "node javascript/web-server.js",
     "test": "node javascript/web-server.js testing=true "
   },
   "keywords": [],
