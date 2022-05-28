@@ -4,9 +4,10 @@ Launch form Heroku:
   git commit -am 'abc'
   git push heroku main
 
-https://phone-recipes.herokuapp.com/
+View:
+  https://electric-snakes.herokuapp.com/create-game
 
 
 Check errors:
-  heroku logs --tail -a electric-snakes
+  heroku logs --tail --app electric-snakes
 
