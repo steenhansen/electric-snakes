@@ -1,4 +1,4 @@
-Electric-Snakes, [https://electric-snakes.herokuapp.com](https://electric-snakes.herokuapp.com/create-game), is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
+Electric-Snakes, [https://electric-snakes.herokuapp.com](https://electric-snakes.herokuapp.com/create-game) slow to start free site, is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
 Interactions are synchronized via WebSockets between the single coordinating Node.js server and possibly several Javascript browsers.
 The server is a free Heroku dyno, so it can take a few seconds to wake up.
 
