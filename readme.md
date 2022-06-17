@@ -17,13 +17,14 @@ One person "creates" and names the game. While others can join in.
 
 - nvm use 18.2.0
 
-### Run program
-
-    $ npm start
-
 ### Compile all and run from scratch:
 
     $ npm install
     $ npx tsc
     $ npx webpack-cli
     $ npm start  or  npm test
+
+
+### Run program
+
+    $ npm start
