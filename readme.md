@@ -25,7 +25,14 @@ One person "creates" and names the game. While others can join in.
     $ npx webpack-cli
     $ npm start  or  npm test
 
-
 ### Run program
 
     $ npm start
+
+## Free Hosting on render.com
+	Web Service
+	
+	Settings
+		Build Command	$ yarn
+		Start Command	$ npm start
+		
