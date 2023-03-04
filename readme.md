@@ -27,3 +27,11 @@ One person "creates" and names the game. While others can join in.
     $ npx tsc
     $ npx webpack-cli
     $ npm start  or  npm test
+
+## Free Hosting on render.com
+	Web Service
+	
+	Settings
+		Build Command	$ yarn
+		Start Command	$ npm start
+		
