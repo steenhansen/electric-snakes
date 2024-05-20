@@ -1,4 +1,4 @@
-<a name='fast-start'></a>
+
 <a name='s'></a>
 
 <img src="./images/tall-typescript.gif" width="400">
