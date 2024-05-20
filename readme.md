@@ -1,5 +1,9 @@
 <a name='fast-start'></a>
 <a name='s'></a>
+
+<img src="./images/tall-typescript.gif" width="400">
+
+
 Electric-Snakes, [https://electric-snakes.onrender.com](https://electric-snakes.onrender.com/create-game) a slow to start free site, is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
 Interactions are synchronized via WebSockets between the single coordinating Node.js server and possibly several Javascript browsers.
 The server is a free Render.com dyno, so it can take a few seconds to wake up. 150 seconds to be exact.
