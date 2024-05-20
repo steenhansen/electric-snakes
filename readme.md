@@ -1,7 +1,7 @@
 
 <a name='s'></a>
 
-<img src="./images/tall-typescript.gif" width="400">
+<img src="./images/tall-typescript.gif" height="534">
 
 
 Electric-Snakes, [https://electric-snakes.onrender.com](https://electric-snakes.onrender.com/create-game) a slow to start free site, is a multi-computer snake game server, written in Typescript, using Redux and Immutable.js to hold state.
