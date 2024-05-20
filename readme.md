@@ -1,6 +1,8 @@
 
 <a name='s'></a>
 
+## Multiplayer Game of Snakes
+
 <img src="./images/tall-typescript.gif" height="534">
 
 
